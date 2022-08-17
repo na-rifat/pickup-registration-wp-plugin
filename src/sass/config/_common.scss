@@ -1,0 +1,296 @@
+#wpadminbar {
+    bottom: 0;
+    top: auto;
+    position: fixed;
+}
+
+.col10 {
+    width: 10%;
+}
+.col20 {
+    width: 20%;
+}
+.col30 {
+    width: 30%;
+}
+.col40 {
+    width: 40%;
+}
+.col50 {
+    width: 50%;
+}
+.col60 {
+    width: 60%;
+}
+.col70 {
+    width: 70%;
+}
+.col80 {
+    width: 80%;
+}
+.col90 {
+    width: 80%;
+}
+.col100 {
+    width: 100%;
+}
+
+@include breakpoint(mobile) {
+    .col10,
+    .col20,
+    .col30,
+    .col40,
+    .col50,
+    .col60,
+    .col70,
+    .col80,
+    .col90,
+    .col100 {
+        width: 100%;
+    }
+}
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin inline-flex-center {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flex-start {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+@mixin flex-end {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+}
+
+@mixin flex-top {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+@mixin flex-end {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+@mixin flex-spaced {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@mixin flex-middle {
+    display: flex;
+    align-items: center;
+}
+@mixin middle-content {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+@mixin cursor {
+    cursor: pointer;
+}
+
+@mixin transition {
+    transition: 0.2s all linear;
+}
+
+@mixin mobile-column {
+    @include breakpoint(mobile) {
+        grid-template-columns: repeat(1, 1fr);
+        flex-flow: column;
+    }
+}
+@mixin mobile-column-reverse {
+    @include breakpoint(mobile) {
+        flex-flow: column-reverse;
+    }
+}
+@mixin mobile-heading {
+    @include breakpoint(mobile) {
+        flex-flow: column;
+    }
+}
+
+@mixin mobile-button {
+    @include breakpoint(mobile) {
+        align-self: flex-start;
+    }
+}
+
+@mixin hide-mobile {
+    @include breakpoint(mobile) {
+        display: none;
+    }
+}
+
+@mixin hide-tablet {
+    @include breakpoint(tablet) {
+        display: none;
+    }
+}
+
+@mixin animation-shake {
+    animation-name: shake;
+    animation-duration: 0.8s;
+    animation-iteration-count: 1;
+}
+
+@mixin mobile-visible {
+    @include breakpoint(mobile) {
+        display: inline-block;
+    }
+}
+
+@mixin tablet-visible {
+    @include breakpoint(tablet) {
+        display: inline-block;
+    }
+}
+
+@mixin mobile-flex-center {
+    @include breakpoint(mobile) {
+        @include flex-center;
+    }
+}
+
+@mixin tablet-flex-center {
+    @include breakpoint(tablet) {
+        @include flex-center;
+    }
+}
+
+@mixin bg-cover {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+@mixin margin-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin grid-column($count: 1) {
+    grid-template-columns: repeat($count, 1fr);
+}
+
+@mixin grid($column: 3, $gap: 20) {
+    display: grid;
+    gap: #{$gap}px;
+    @include grid-column($column);
+}
+
+@mixin mobile-grid($column: 1, $gap: 20) {
+    @include breakpoint(mobile) {
+        @include grid($column, $gap);
+    }
+}
+
+@mixin tablet-grid($column: 2, $gap: 20) {
+    @include breakpoint(tablet) {
+        @include grid($column, $gap);
+    }
+}
+
+@mixin mobile {
+    @include breakpoint(mobile) {
+        @content;
+    }
+}
+@mixin mobile-tablet {
+    @include mobile {
+        @content;
+    }
+    @include tablet {
+        @content;
+    }
+}
+@mixin tablet {
+    @include breakpoint(tablet) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @include breakpoint(desktop) {
+        @content;
+    }
+}
+
+@mixin mobile-text-size($size: 12) {
+    @include mobile {
+        font-size: #{$size}px;
+    }
+}
+
+@mixin tablet-text-size($size: 12) {
+    @include tablet {
+        font-size: #{$size}px;
+    }
+}
+
+@mixin desktop-text-size($size: 12) {
+    @include desktop {
+        font-size: #{$size}px;
+    }
+}
+
+@mixin mobile-padding($padding: 0px) {
+    @include mobile {
+        padding: $padding;
+    }
+}
+@mixin tablet-padding($padding: 0px) {
+    @include tablet {
+        padding: $padding;
+    }
+}
+@mixin desktop-padding($padding: 0px) {
+    @include desktop {
+        padding: $padding;
+    }
+}
+@mixin mobile-margin($margin: 0px) {
+    @include mobile {
+        margin: $margin;
+    }
+}
+@mixin tablet-margin($margin: 0px) {
+    @include tablet {
+        margin: $margin;
+    }
+}
+@mixin desktop-margin($margin: 0px) {
+    @include desktop {
+        margin: $margin;
+    }
+}
+
+@mixin mobile-gap($gap: 20px) {
+    @include mobile {
+        gap: #{$gap}px;
+    }
+}
+@mixin tablet-gap($gap: 20px) {
+    @include tablet {
+        gap: #{$gap}px;
+    }
+}
+@mixin desktop-gap($gap: 20px) {
+    @include desktop {
+        gap: #{$gap}px;
+    }
+}

@@ -1,0 +1,89 @@
+section.admin-orders {
+    table {
+        width: 100%;
+    }
+
+    .wrapper {
+        &:not(:last-child) {
+            margin-bottom: 50px;
+        }
+    }
+
+    .btn-grp {
+        display: flex;
+        justify-content: flex-end;
+        margin: 30px 0;
+        .approve-orders-btn {
+            background-color: #1a8d0f;
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 8px;
+            transition: 0.3s all linear;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(0.9);
+                box-shadow: 0 0 3px #ccc;
+            }
+        }
+    }
+
+    .pr-table tbody tr {
+        background-color: #fff;
+    }
+}
+
+section.sample-modal {
+    display: none;
+    .btn-grp {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn-cancel,
+    .btn-confirm {
+        background-color: #1a8d0f;
+        padding: 10px 20px;
+        font-weight: bold;
+        color: #fff;
+        border-radius: 8px;
+        transition: 0.3s all linear;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(0.9);
+            box-shadow: 0 0 3px #ccc;
+        }
+
+        &.btn-cancel {
+            background-color: red;
+        }
+    }
+
+    ul.review-list {
+        display: flex;
+        flex-flow: column;
+        gap: 40px;
+
+        li {
+            background-color: #ccc;
+            padding: 30px;
+
+            label {
+                display: flex;
+                flex-flow: column;
+                gap: 10px;
+                background-color: rgb(224, 224, 224);
+                padding: 30px;
+                border-radius: 10px;
+            }
+
+            display: none;
+            &.in-list {
+                display: block;
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "name": "webpack",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server --config webpack.dev.js --open",
+        "dev": "webpack-dev-server --config webpack.dev.js --open",
+        "development": "webpack-dev-server --config webpack.dev.js --open",
+        "build": "webpack --config webpack.prod.js",
+        "prod": "webpack --config webpack.prod.js",
+        "production": "webpack --config webpack.prod.js",
+        "watch": "webpack --watch --progress --config webpack.watch.js"
+    },
+    "keywords": [],
+    "author": "Notionhive",
+    "license": "ISC",
+    "devDependencies": {
+        "clean-webpack-plugin": "^4.0.0",
+        "copy-webpack-plugin": "^10.2.4",
+        "css-loader": "^6.7.0",
+        "file-loader": "^6.2.0",
+        "html-loader": "^3.1.0",
+        "html-webpack-plugin": "^5.5.0",
+        "jquery": "^3.6.0",
+        "mini-css-extract-plugin": "^2.6.0",
+        "node-sass": "^7.0.1",
+        "sass-loader": "^12.6.0",
+        "slick-carousel": "^1.8.1",
+        "style-loader": "^3.3.1",
+        "webpack": "^5.70.0",
+        "webpack-cli": "^4.9.2",
+        "webpack-dev-server": "^4.7.4"
+    },
+    "dependencies": {
+        "aos": "^2.3.4",
+        "gsap": "^3.10.4",
+        "scrollmagic": "^2.0.8",
+        "scrollmagic-plugin-gsap": "^1.0.4",
+        "webpack-sass-autoloader": "^1.2.2"
+    }
+}

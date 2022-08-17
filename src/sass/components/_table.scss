@@ -1,0 +1,41 @@
+.pr-table {
+    border-radius: 15px;
+    border-collapse: collapse;
+    overflow: hidden;
+    td,
+    th {
+        padding: 10px 15px;
+        font-family: $font-primary;
+    }
+    thead {
+        tr {
+            background-color: $color-primary;
+
+            th {
+                font-weight: 600;
+                color: #fff;
+            }
+        }
+    }
+    tbody {
+        tr {
+            background-color: rgb(240, 240, 240);
+            &:not(:last-child) {
+                border-bottom: 1px solid #ccc;
+            }
+        }
+    }
+
+    .submitted {
+        color: rgb(146, 146, 8);
+        font-weight: bold;
+    }
+    .approved {
+        font-weight: bold;
+        color: green;
+    }
+
+    .completed {
+        font-weight: bold;
+    }
+}

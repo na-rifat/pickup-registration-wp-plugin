@@ -1,0 +1,55 @@
+.customer-report {
+    .btn-show-detail {
+        cursor: pointer;
+        i {
+            transition: 0.3s all ease;
+        }
+
+        &:hover i {
+            transform: scale(1.1);
+        }
+    }
+}
+
+.report-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.534);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .wrapper {
+        padding: 30px;
+        width: 80vw;
+        height: 90vh;
+        background: white;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    display: none;
+    .cls-btn {
+        display: flex;
+        padding: 15px;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        width: 54px;
+        margin-left: auto;
+        cursor: pointer;
+        transition: 0.3s all linear;
+
+        &:hover {
+            background-color: rgb(197, 12, 12);
+        }
+    }
+}

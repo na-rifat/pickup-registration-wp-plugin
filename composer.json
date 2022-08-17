@@ -1,0 +1,21 @@
+{
+    "name": "qutiest/pickup-registration",
+    "description": "Pickup registration system",
+    "type": "wordpress-plugin",
+    "license": "GPL v2",
+    "autoload": {
+        "psr-4": {
+            "pr\\": "inc/"
+        },
+        "files": [
+            "functions.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Qutiest"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

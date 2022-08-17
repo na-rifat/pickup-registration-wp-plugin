@@ -1,0 +1,128 @@
+// Config
+@import "./config/config";
+@import "./config/responsive";
+@import "./config/common";
+@import "./config/container";
+// Components
+@import "./components/pickup-registration";
+@import "./components/table";
+@import "./components/admin-orders";
+@import "./components/my-reports";
+
+.pr-section {
+    margin: 100px 0;
+
+    * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    h2 {
+        font-family: $font-primary;
+        font-size: 28px;
+        margin: 0;
+        margin-bottom: 50px;
+    }
+    h3 {
+        font-family: $font-primary;
+        font-size: 18px;
+        margin: 0;
+    }
+
+    label {
+        font-family: $font-primary;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .colheading {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ccc;
+    }
+
+    form {
+        [type="text"],
+        [type="tel"],
+        [type="date"],
+        [type="time"] {
+            width: 100%;
+            margin: 0;
+            outline: none;
+            border: 1px solid #ccc;
+            padding: 12px 10px;
+            border-radius: 5px;
+            -webkit-transition: 0.5s border-color linear;
+            -o-transition: 0.5s border-color linear;
+            transition: 0.5s border-color linear;
+
+            &:focus {
+                border-color: $color-primary;
+            }
+        }
+        [type="submit"] {
+            background-color: $color-primary;
+            border: none;
+            outline: none;
+            padding: 15px 30px;
+            font-weight: 600;
+            color: $color-white;
+            border-radius: 10px;
+            transition: 0.3s transform linear;
+            cursor: pointer;
+            font-family: $font-primary;
+            font-size: 15px;
+            &:hover {
+                transform: scale(0.9);
+            }
+        }
+        .add-new-sample {
+            font-weight: bold;
+            cursor: pointer;
+            font-family: $font-primary;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        .btn-grp {
+        }
+
+        .checkbox-grp {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            gap: 10px;
+            label {
+                line-height: 0;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+    }
+
+    .form table {
+        border-collapse: collapse;
+
+        td {
+            padding: 10px 5px 10px 0;
+            background-color: transparent;
+            border: none;
+        }
+    }
+}
+
+.tleft {
+    text-align: left;
+}
+.tright {
+    text-align: right;
+}
+.tcenter {
+    text-align: center;
+}
