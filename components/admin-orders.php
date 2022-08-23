@@ -1,21 +1,18 @@
 <?php
-global $wpdb;
-$prefix = $wpdb->prefix;
-$pickup_info_table = $prefix . 'pickup_info';
-$sample_info_table = $prefix . 'sample_info';
-$reports_table =  $prefix . 'pr_reports';
+    global $wpdb;
+    $prefix            = $wpdb->prefix;
+    $pickup_info_table = $prefix . 'pickup_info';
+    $sample_info_table = $prefix . 'sample_info';
+    $reports_table     = $prefix . 'pr_reports';
 
-$query = "SELECT * FROM $pickup_info_table WHERE status='submitted';";
-$new_orders = $wpdb->get_results(
-    $wpdb->prepare(
-        $query
-    )
-);
+    // $query      = ;
+    $new_orders = $wpdb->get_results(
+        "SELECT * FROM {$prefix}pr_orders WHERE status='submitted';"
+    );
 
-$query = "SELECT * FROM $pickup_info_table;";
-$orders = $wpdb->get_results(
-    $query
-)
+    $orders = $wpdb->get_results(
+        "SELECT * FROM {$prefix}pr_orders;"
+    );
 ?>
 <!-- View orders Customer page -->
 <section class="customer-orders pr-section admin-orders">
@@ -43,37 +40,34 @@ $orders = $wpdb->get_results(
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($new_orders as $order) { ?>
-                        <tr data-id="<?php echo $order->id ?>">
-                            <td data-id="<?php echo $order->id ?>"><input type="checkbox" name="approve_list[]" id="approve_list" class="approve-order-selection"></td>
-                            <td><?php echo $order->order_id ?></td>
-                            <td><?php echo $order->{'request-date'} ?></td>
-                            <td><?php echo $order->organization ?></td>
-                            <td><?php echo $order->{'pickup-date'} ?></td>
-                            <td><?php echo $order->{'request-time'} ?></td>
-                            <td><?php echo $order->{'contact-person'} ?></td>
-                            <td><?php echo $order->phone ?></td>
-                            <td>
-                                <?php
-                                $query  = "SELECT `sample-name` FROM $sample_info_table WHERE pickup_id=%s";
+                    <?php foreach ( $new_orders as $order ) {?>
+                    <tr data-id="<?php echo $order->id ?>">
+                        <td data-id="<?php echo $order->id ?>"><input type="checkbox" name="approve_list[]"
+                                id="approve_list" class="approve-order-selection"></td>
+                        <td><?php echo $order->order_id ?></td>
+                        <td><?php echo $order->{'request-date'} ?></td>
+                        <td><?php echo $order->organization ?></td>
+                        <td><?php echo $order->{'pickup-date'} ?></td>
+                        <td><?php echo $order->{'request-time'} ?></td>
+                        <td><?php echo $order->{'contact-person'} ?></td>
+                        <td><?php echo $order->phone ?></td>
+                        <td>
+                            <?php
                                 $samples = $wpdb->get_results(
-                                    $wpdb->prepare(
-                                        $query,
-                                        $order->id
-                                    )
+                                    "SELECT `sample-name` FROM {$prefix}pr_reports WHERE parent={$order->id}"
                                 );
 
-                                $sample_list = [];
+                                    $sample_list = [];
 
-                                foreach ($samples as $sample) {
-                                    $sample_list[] = $sample->{'sample-name'};
-                                }
+                                    foreach ( $samples as $sample ) {
+                                        $sample_list[] = $sample->{'sample-name'};
+                                    }
 
-                                echo implode(', ', $sample_list);
+                                    echo implode( ', ', $sample_list );
                                 ?>
-                            </td>
-                        </tr>
-                    <?php } ?>
+                        </td>
+                    </tr>
+                    <?php }?>
                 </tbody>
             </table>
             <div class="btn-grp">
@@ -105,62 +99,55 @@ $orders = $wpdb->get_results(
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($orders   as $order) { ?>
-                        <tr data-id="<?php echo $order->id ?>">
-                            <td class="<?php echo $order->status ?>"><?php echo ucfirst($order->status) ?></td>
-                            <td><?php echo $order->order_id ?></td>
-                            <td><?php echo $order->{'request-date'} ?></td>
-                            <td><?php echo $order->organization ?></td>
-                            <td><?php echo $order->{'pickup-date'} ?></td>
-                            <td><?php echo $order->{'request-time'} ?></td>
-                            <td><?php echo $order->{'contact-person'} ?></td>
-                            <td><?php echo $order->phone ?></td>
-                            <td>
-                                <?php
-                                $query =    "SELECT COUNT(*) FROM $sample_info_table WHERE pickup_id=%s";
+                    <?php foreach ( $orders as $order ) {?>
+                    <tr data-id="<?php echo $order->id ?>">
+                        <td class="<?php echo $order->status ?>"><?php echo ucfirst( $order->status ) ?></td>
+                        <td><?php echo $order->order_id ?></td>
+                        <td><?php echo $order->{'request-date'} ?></td>
+                        <td><?php echo $order->organization ?></td>
+                        <td><?php echo $order->{'pickup-date'} ?></td>
+                        <td><?php echo $order->{'request-time'} ?></td>
+                        <td><?php echo $order->{'contact-person'} ?></td>
+                        <td><?php echo $order->phone ?></td>
+                        <td>
+                            <?php
                                 $sample_count = $wpdb->get_var(
-                                    $wpdb->prepare(
-                                        $query,
-                                        $order->id
-                                    )
+                                    "SELECT COUNT(*) FROM {$prefix}pr_reports WHERE parent={$order->id}"
                                 );
-                                echo $sample_count;
+                                    echo $sample_count;
                                 ?>
-                            </td>
-                            <td>
-                                <?php
-                                $query =     "SELECT `sample-name` FROM $sample_info_table WHERE pickup_id=%s";
-                                $samples = $wpdb->get_results(
-                                    $wpdb->prepare(
-                                        $query,
-                                        $order->id
-                                    )
-                                );
-                                $sample_list = [];
+                        </td>
+                        <td>
+                            <?php
 
-                                foreach ($samples as $sample) {
-                                    $sample_list[] = $sample->{'sample-name'};
+                                    $samples = $wpdb->get_results(
+                                        "SELECT `sample-name` FROM {$prefix}pr_reports WHERE parent={$order->id}"
+                                    );
+                                    $sample_list = [];
+
+                                    foreach ( $samples as $sample ) {
+                                        $sample_list[] = $sample->{'sample-name'};
+                                    }
+
+                                    echo implode( ', ', $sample_list );
+                                ?>
+                        </td>
+                        <?php
+                            if ( $order->status == 'completed' ) {
+                                    $report = $wpdb->get_row(
+                                        "SELECT file from {$prefix}pr_reports WHERE parent={$order->id}"
+                                    );
+
+                                    $file = unserialize( $report->file );
+                                    printf( '<td class="tcenter"><a href="%s" download="%s">%s</a></td>', $file['url'], $file['upload_name'], 'PDF' );
+                                } else {
+                                    printf( '<td class="tcenter">In progress</td>' );
                                 }
 
-                                echo implode(', ', $sample_list);
-                                ?>
-                            </td>
-                            <?php
-                            if ($order->status == 'completed') {
-                                $report = $wpdb->get_row(
-                                    "SELECT file from {$prefix}pr_reports WHERE pickup_id={$order->id}"
-                                );
-
-                                $file = unserialize($report->file);
-                                printf('<td class="tcenter"><a href="%s" download="%s">%s</a></td>', $file['url'], $file['upload_name'], 'PDF');
-                            } else {
-                                printf('<td class="tcenter">In progress</td>');
-                            }
-
                             ?>
-                            <td><a href="#" class="open-order" data-id="<?php echo $order->id ?>">Open</a></td>
-                        </tr>
-                    <?php } ?>
+                        <td><a href="#" class="open-order" data-id="<?php echo $order->id ?>">Open</a></td>
+                    </tr>
+                    <?php }?>
                 </tbody>
             </table>
         </div>
@@ -173,37 +160,38 @@ $orders = $wpdb->get_results(
             <h2>Approval review and file submission</h2>
             <form action="#" class="approval-form" id="approval-form">
                 <ul class="review-list">
-                    <?php foreach ($orders as $order) { ?>
-                        <li data-id="<?php echo $order->id ?>">
-                            <h5><strong>Order: </strong> <?php echo $order->order_id ?></h5>
-                            <p><strong>Request date: </strong><?php echo $order->{'request-date'} ?></p>
-                            <p><strong>Organization: </strong><?php echo $order->organization ?></p>
-                            <p><strong>Pickup date: </strong><?php echo $order->{'pickup-date'} ?></p>
-                            <p><strong>Request time: </strong><?php echo $order->{'request-time'} ?></p>
-                            <p><strong>Contact: </strong><?php echo $order->{'contact-person'} ?></p>
-                            <p><strong>Phone: </strong><?php echo $order->{'phone'} ?></p>
-                            <p><strong>Sample info: </strong>
-                                <?php
-                                $query = "SELECT `sample-name` FROM $sample_info_table WHERE pickup_id=%s";
-                                $samples = $wpdb->get_results(
-                                    $wpdb->prepare(
-                                        $query,
-                                        $order->id,
-                                    )
-                                );
+                    <?php foreach ( $orders as $order ) {?>
+                    <li data-id="<?php echo $order->id ?>">
+                        <h5><strong>Order: </strong>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <?php echo $order->order_id ?></h5>
+                        <p><strong>Request date: </strong><?php echo $order->{'request-date'} ?></p>
+                        <p><strong>Organization: </strong><?php echo $order->organization ?></p>
+                        <p><strong>Pickup date: </strong><?php echo $order->{'pickup-date'} ?></p>
+                        <p><strong>Request time: </strong><?php echo $order->{'request-time'} ?></p>
+                        <p><strong>Contact: </strong><?php echo $order->{'contact-person'} ?></p>
+                        <p><strong>Phone: </strong><?php echo $order->{'phone'} ?></p>
+                        <p><strong>Sample info: </strong>
+                            <?php
+                                $query   = "SELECT `sample-name` FROM {$prefix}pr_reports WHERE parent=%s";
+                                    $samples = $wpdb->get_results(
+                                        $wpdb->prepare(
+                                            $query,
+                                            $order->id,
+                                        )
+                                    );
 
-                                $sample_list = [];
+                                    $sample_list = [];
 
-                                foreach ($samples as $sample) {
-                                    $sample_list[] = $sample->{'sample-name'};
-                                }
+                                    foreach ( $samples as $sample ) {
+                                        $sample_list[] = $sample->{'sample-name'};
+                                    }
 
-                                echo implode(', ', $sample_list);
+                                    echo implode( ', ', $sample_list );
                                 ?>
-                            </p>
-                            <p><label for="pdf"><span>Upload PDF sample file</span><input type="file" name="pdf_<?php echo $order->id ?>" id="pdf"></label></p>
-                        </li>
-                    <?php } ?>
+                        </p>
+                        <p><label for="pdf"><span>Upload PDF sample file</span><input type="file"
+                                    name="pdf_<?php echo $order->id ?>" id="pdf"></label></p>
+                    </li>
+                    <?php }?>
 
                 </ul>
             </form>

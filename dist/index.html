@@ -1,1 +1,468 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Plugin templates</title><script defer="defer" src="js/main.auto.min.js"></script><script defer="defer" src="js/vendor.auto.min.js"></script><link href="css/style.auto.min.css" rel="stylesheet"></head><body><section class="sample-registration pr-section"><div class="container"><div class="wrapper"><div class="heading"><h2>New pickup registration</h2></div><div class="form"><form action="#"><div class="leftcol"><div class="colheading"><h3>Pickup Info</h3></div><table><tr><td><label for="organization">Organization</label></td><td><input name="organization" id="organization"/></td></tr><tr><td><label for="pickup-area">Pickup Area</label></td><td><input name="pickup-area" id="pickup-area"/></td></tr><tr><td><label for="request-date">Request Date</label></td><td><input type="date" name="request-date" id="request-date"/></td></tr><tr><td><label for="request-time">Request Time</label></td><td><input type="time" name="request-time" id="request-time"/></td></tr><tr><td><label for="contact-person">Contact Person</label></td><td><input name="contact-person" id="contact-person"/></td></tr><tr><td><label for="phone">Phone</label></td><td><input type="tel" name="phone" id="phone"/></td></tr></table></div><div class="rightcol"><div class="colheading"><h3>Sample Info</h3></div><table><tr><td><label for="sample-name">Sample Name</label></td><td><input name="sample-name[]" id="sample-name"/></td></tr><tr><td><label for="sample-info">Sample Info</label></td><td><input name="sample-info[]" id="sample-info"/></td></tr><tr><td><label for="condition_n">Condition</label></td><td><div class="checkbox-grp"><label for="condition_n"><input type="checkbox" name="condition[]" id="condition_n"/>N</label> <label for="condition_y"><input type="checkbox" name="condition[]" id="condition_y"/> Y</label></div></td></tr><tr><td><label for="specific-info">Specific Info</label></td><td><input name="specific-info[]" id="specific-info"/></td></tr><tr><td><label for="surgeon">Surgeon</label></td><td><input name="surgeon[]" id="surgeon"/></td></tr><tr><td><label for="info_phone">Info Phone</label></td><td><input name="info_phone" id="info_phone"/></td></tr></table><div class="add-new-sample">+ Add Sample</div><div class="btn-grp"><button type="submit">Submit</button></div></div></form></div></div></div></section><section class="customer-orders pr-section"><div class="container"><div class="wrapper"><div class="heading"><h2>View all my order: Customer Page</h2><div class="colheading"><h3>My orders</h3></div></div><table class="pr-table"><thead><tr><th>Status</th><th>Order #</th><th>Request Date</th><th>Organization</th><th>Pickup Date</th><th>Time</th><th>Cotnact</th><th>Phone</th><th>Sample</th></tr></thead><tbody><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td></tr><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td></tr><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td></tr><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td></tr></tbody></table></div></div></section><section class="customer-report pr-section"><div class="container"><div class="wrapper"><div class="heading"><h2>View all my order: Customer Page</h2><div class="colheading"><h3>My orders</h3></div></div><table class="pr-table"><thead><tr><th>Order #</th><th>O.P. Date</th><th>Cotnact</th><th>Phone</th><th>Sample ID</th><th>Sample Info</th><th>Download Report</th></tr></thead><tbody><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td><i class="fa-solid fa-arrow-up-right-from-square"></i></td><td>In progress</td></tr><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td><i class="fa-solid fa-arrow-up-right-from-square"></i></td><td><a href="#">PDF</a></td></tr><tr><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td><i class="fa-solid fa-arrow-up-right-from-square"></i></td><td><a href="#">PDF</a></td></tr></tbody></table></div></div></section><section class="customer-report pr-section"><div class="container"><div class="wrapper"><div class="heading"><h2>Manage Orders</h2><div class="colheading"><h3>New orders</h3></div></div><div class="admin-table"><table class="pr-table"><thead><tr><th>Select</th><th>Order #</th><th>Request Date</th><th>Organization</th><th>Pickup Date</th><th>Time</th><th>Contact</th><th>Phone</th><th>Sample Info</th><th>Condition</th></tr></thead><tbody><tr><td><input type="checkbox" name="" id=""/></td><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td><i class="fa-solid fa-arrow-up-right-from-square"></i></td><td>In progress</td></tr></tbody></table><div class="btn-grp"><button>Approve Selected Orders</button></div></div><div class="admin-table"><table class="pr-table"><thead><tr><th>Status</th><th>Order #</th><th>Request Date</th><th>Organization</th><th>Pickup Date</th><th>Time</th><th>Contact</th><th>Phone</th><th>Qt.</th><th>Sample Info</th></tr></thead><tbody><tr><td><input type="checkbox" name="" id=""/></td><td class="submitted">Submitted</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td>Lorem.</td><td><i class="fa-solid fa-arrow-up-right-from-square"></i></td><td>In progress</td><td>In progress</td><td>In progress</td></tr></tbody></table><div class="btn-grp"><select name="sort-by" id="sort-by"><option value="pickup_date">Pickup Date</option><option value="request_date">Request Date</option><option value="sample_info">Sample Info</option><option value="status">Status</option></select></div></div></div></div></section></body></html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plugin templates</title>
+    <script defer src="js/main.auto.min.js"></script><script defer src="js/vendor.auto.min.js"></script><link href="css/style.auto.min.css" rel="stylesheet"></head>
+    <body>
+        <!-- Sample pickup registration -->
+        <section class="sample-registration pr-section">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="heading">
+                        <h2>New pickup registration</h2>
+                    </div>
+                    <div class="form">
+                        <form action="#">
+                            <div class="leftcol">
+                                <div class="colheading">
+                                    <h3>Pickup Info</h3>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label for="organization"
+                                                >Organization</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="organization"
+                                                id="organization"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="pickup-area"
+                                                >Pickup Area</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="pickup-area"
+                                                id="pickup-area"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="request-date"
+                                                >Request Date</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="date"
+                                                name="request-date"
+                                                id="request-date"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="request-time"
+                                                >Request Time</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="time"
+                                                name="request-time"
+                                                id="request-time"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="contact-person"
+                                                >Contact Person</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="contact-person"
+                                                id="contact-person"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="phone">Phone</label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                id="phone"
+                                            />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="rightcol">
+                                <div class="colheading">
+                                    <h3>Sample Info</h3>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <label for="sample-name"
+                                                >Sample Name</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="sample-name[]"
+                                                id="sample-name"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="sample-info"
+                                                >Sample Info</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="sample-info[]"
+                                                id="sample-info"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="condition_n"
+                                                >Condition</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <div class="checkbox-grp">
+                                                <label for="condition_n"
+                                                    ><input
+                                                        type="checkbox"
+                                                        name="condition[]"
+                                                        id="condition_n"
+                                                    />N</label
+                                                >
+                                                <label for="condition_y">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="condition[]"
+                                                        id="condition_y"
+                                                    />
+                                                    Y
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="specific-info"
+                                                >Specific Info</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="specific-info[]"
+                                                id="specific-info"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="surgeon">Surgeon</label>
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="surgeon[]"
+                                                id="surgeon"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="info_phone"
+                                                >Info Phone</label
+                                            >
+                                        </td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                name="info_phone"
+                                                id="info_phone"
+                                            />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="add-new-sample">+ Add Sample</div>
+                                <div class="btn-grp">
+                                    <button type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Sample pickup registration end-->
+        <!-- View orders Customer page -->
+        <section class="customer-orders pr-section">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="heading">
+                        <h2>View all my order: Customer Page</h2>
+                        <div class="colheading">
+                            <h3>My orders</h3>
+                        </div>
+                    </div>
+                    <table class="pr-table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Order #</th>
+                                <th>Request Date</th>
+                                <th>Organization</th>
+                                <th>Pickup Date</th>
+                                <th>Time</th>
+                                <th>Cotnact</th>
+                                <th>Phone</th>
+                                <th>Sample</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                            </tr>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                            </tr>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                            </tr>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- View orders Customer page end -->
+        <!-- View my report customer page -->
+        <section class="customer-report pr-section">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="heading">
+                        <h2>View all my order: Customer Page</h2>
+                        <div class="colheading">
+                            <h3>My orders</h3>
+                        </div>
+                    </div>
+                    <table class="pr-table">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>O.P. Date</th>
+                                <th>Cotnact</th>
+                                <th>Phone</th>
+                                <th>Sample ID</th>
+                                <th>Sample Info</th>
+                                <th>Download Report</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>
+                                    <i
+                                        class="fa-solid fa-arrow-up-right-from-square"
+                                    ></i>
+                                </td>
+                                <td>In progress</td>
+                            </tr>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>
+                                    <i
+                                        class="fa-solid fa-arrow-up-right-from-square"
+                                    ></i>
+                                </td>
+                                <td><a href="#">PDF</a></td>
+                            </tr>
+                            <tr>
+                                <td class="submitted">Submitted</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>Lorem.</td>
+                                <td>
+                                    <i
+                                        class="fa-solid fa-arrow-up-right-from-square"
+                                    ></i>
+                                </td>
+                                <td><a href="#">PDF</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <!-- View my report customer page end -->
+
+        <!-- Manage orders : admin page -->
+
+        <section class="customer-report pr-section">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="heading">
+                        <h2>Manage Orders</h2>
+                        <div class="colheading">
+                            <h3>New orders</h3>
+                        </div>
+                    </div>
+                    <div class="admin-table">
+                        <table class="pr-table">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Order #</th>
+                                    <th>Request Date</th>
+                                    <th>Organization</th>
+                                    <th>Pickup Date</th>
+                                    <th>Time</th>
+                                    <th>Contact</th>
+                                    <th>Phone</th>
+                                    <th>Sample Info</th>
+                                    <th>Condition</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="" id="" />
+                                    </td>
+                                    <td class="submitted">Submitted</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>
+                                        <i
+                                            class="fa-solid fa-arrow-up-right-from-square"
+                                        ></i>
+                                    </td>
+                                    <td>In progress</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-grp">
+                            <button>Approve Selected Orders</button>
+                        </div>
+                    </div>
+                    <div class="admin-table">
+                        <table class="pr-table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Order #</th>
+                                    <th>Request Date</th>
+                                    <th>Organization</th>
+                                    <th>Pickup Date</th>
+                                    <th>Time</th>
+                                    <th>Contact</th>
+                                    <th>Phone</th>
+                                    <th>Qt.</th>
+                                    <th>Sample Info</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="" id="" />
+                                    </td>
+                                    <td class="submitted">Submitted</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>Lorem.</td>
+                                    <td>
+                                        <i
+                                            class="fa-solid fa-arrow-up-right-from-square"
+                                        ></i>
+                                    </td>
+                                    <td>In progress</td>
+                                    <td>In progress</td>
+                                    <td>In progress</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-grp">
+                            <select name="sort-by" id="sort-by">
+                                <option value="pickup_date">Pickup Date</option>
+                                <option value="request_date">
+                                    Request Date
+                                </option>
+                                <option value="sample_info">Sample Info</option>
+                                <option value="status">Status</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Manage orders : admin page end -->
+    </body>
+</html>

@@ -15,7 +15,7 @@ class Activation
         $prefix = $wpdb->prefix;
 
         // Pickup registration table
-        $query = "CREATE TABLE IF NOT EXISTS `{$prefix}pickup_info` (
+        $query = "CREATE TABLE IF NOT EXISTS `{$prefix}pr_orders` (
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
             `order_id` longtext NOT NULL,
             `user_id` longtext NOT NULL,
@@ -31,31 +31,35 @@ class Activation
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         dbDelta($query);
         // Sample info table
-        $query = "CREATE TABLE IF NOT EXISTS `{$prefix}sample_info` (
+        $query = "CREATE TABLE IF NOT EXISTS `{$prefix}pr_reports` (
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-            `pickup_id` longtext NOT NULL,
+            `order_id` longtext NOT NULL,
+            `parent` longtext NOT NULL,
             `sample-name` longtext NOT NULL,
             `sample-info` longtext NOT NULL,
             `condition` longtext NOT NULL,
             `specific-info` longtext NOT NULL,
             `surgeon` longtext NOT NULL,
-            `info_phone` longtext NOT NULL,
-            PRIMARY KEY (`id`)
-           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-        dbDelta($query);
-        // User reports
-        $query = "CREATE TABLE `{$prefix}_pr_reports` (
-            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-            `order_id` longtext NOT NULL,
-            `pickup_id` longtext NOT NULL,
-            `contact_person` longtext NOT NULL,
-            `phone` longtext NOT NULL,
-            `file` longtext NOT NULL,
+            `pdf1` longtext NOT NULL,
+            `pdf2` longtext NOT NULL,
             `status` longtext NOT NULL,
             `user_id` longtext NOT NULL,
             PRIMARY KEY (`id`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         dbDelta($query);
+        // User reports
+        // $query = "CREATE TABLE `{$prefix}_pr_reports` (
+        //     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+        //     `order_id` longtext NOT NULL,
+        //     `pickup_id` longtext NOT NULL,
+        //     `contact_person` longtext NOT NULL,
+        //     `phone` longtext NOT NULL,
+        //     `file` longtext NOT NULL,
+        //     `status` longtext NOT NULL,
+        //     `user_id` longtext NOT NULL,
+        //     PRIMARY KEY (`id`)
+        //    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+        // dbDelta($query);
 
 
         // Create pages

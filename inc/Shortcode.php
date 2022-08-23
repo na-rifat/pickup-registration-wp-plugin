@@ -7,6 +7,13 @@ class Shortcode
     function __construct()
     {
         $this->register_shortcodes();
+
+        add_action('wp_footer', [$this, 'include_modal']);
+    }
+
+    function include_modal()
+    {
+        _pr_get_template('msg-modal');
     }
 
     function register_shortcodes()
@@ -23,7 +30,7 @@ class Shortcode
         _pr_get_template('pickup-registration');
     }
 
-    
+
     function my_orders()
     {
         _pr_get_template('my-orders');
@@ -33,6 +40,4 @@ class Shortcode
     {
         _pr_get_template('my-reports');
     }
-
-
 }

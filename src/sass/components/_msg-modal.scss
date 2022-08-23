@@ -1,0 +1,34 @@
+.msg-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.404);
+    z-index: 9999;
+    .inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px;
+        border-radius: 10px;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    &.success {
+        .inner {
+            background-color: rgb(44, 212, 44);
+            box-shadow: 0 4px 20px rgb(44, 212, 44);
+        }
+    }
+    &.error {
+        .inner {
+            background-color: red;
+            box-shadow: 0 4px 20px red;
+        }
+    }
+}
