@@ -103,7 +103,8 @@
 .pr-table {
   border-radius: 15px;
   border-collapse: collapse;
-  overflow: hidden; }
+  overflow: hidden;
+  border: 1px solid #000; }
   .pr-table td,
   .pr-table th {
     padding: 10px 15px;
@@ -135,7 +136,8 @@ section.admin-orders .wrapper:not(:last-child) {
 section.admin-orders .btn-grp {
   display: flex;
   justify-content: flex-end;
-  margin: 30px 0; }
+  margin: 30px 0;
+  gap: 20px; }
   section.admin-orders .btn-grp .approve-orders-btn {
     background-color: #1a8d0f;
     padding: 10px 20px;
@@ -147,9 +149,25 @@ section.admin-orders .btn-grp {
     section.admin-orders .btn-grp .approve-orders-btn:hover {
       transform: scale(0.9);
       box-shadow: 0 0 3px #ccc; }
+  section.admin-orders .btn-grp .delete-orders-btn {
+    background-color: red;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 8px;
+    transition: 0.3s all linear;
+    cursor: pointer; }
+    section.admin-orders .btn-grp .delete-orders-btn:hover {
+      transform: scale(0.9);
+      box-shadow: 0 0 3px #ccc; }
 
 section.admin-orders .pr-table tbody tr {
   background-color: #fff; }
+
+section.admin-orders .sorting-holder {
+  display: flex;
+  margin-top: 30px;
+  justify-content: flex-end; }
 
 section.sample-modal {
   display: none; }
@@ -159,7 +177,7 @@ section.sample-modal {
     align-items: center;
     gap: 10px; }
   section.sample-modal .btn-cancel,
-  section.sample-modal .btn-confirm {
+  section.sample-modal .btn-confirm, section.sample-modal .btn-close {
     background-color: #1a8d0f;
     padding: 10px 20px;
     font-weight: bold;
@@ -168,12 +186,15 @@ section.sample-modal {
     transition: 0.3s all linear;
     cursor: pointer; }
     section.sample-modal .btn-cancel:hover,
-    section.sample-modal .btn-confirm:hover {
+    section.sample-modal .btn-confirm:hover, section.sample-modal .btn-close:hover {
       transform: scale(0.9);
       box-shadow: 0 0 3px #ccc; }
     section.sample-modal .btn-cancel.btn-cancel,
-    section.sample-modal .btn-confirm.btn-cancel {
+    section.sample-modal .btn-confirm.btn-cancel, section.sample-modal .btn-close.btn-cancel {
       background-color: red; }
+    section.sample-modal .btn-cancel.btn-close,
+    section.sample-modal .btn-confirm.btn-close, section.sample-modal .btn-close.btn-close {
+      background-color: #dd7520; }
   section.sample-modal ul.review-list {
     display: flex;
     flex-flow: column;
@@ -219,7 +240,8 @@ section.sample-modal {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); }
+    transform: translate(-50%, -50%);
+    overflow: auto; }
   .report-modal .cls-btn {
     display: flex;
     padding: 15px;
@@ -234,6 +256,31 @@ section.sample-modal {
     transition: 0.3s all linear; }
     .report-modal .cls-btn:hover {
       background-color: #c50c0c; }
+  .report-modal table {
+    border: none; }
+    .report-modal table tr th:first-child {
+      text-align: left;
+      color: #000; }
+    .report-modal table textarea {
+      border: 1px solid #000;
+      outline: none; }
+  .report-modal .btn-grp button {
+    margin-left: auto;
+    display: block; }
+  .report-modal th,
+  .report-modal td {
+    border: none; }
+  .report-modal .comments {
+    padding: 0;
+    margin: 0;
+    list-style-type: none; }
+    .report-modal .comments .comment-text {
+      color: #000;
+      margin-right: 20px;
+      display: inline-block; }
+    .report-modal .comments .comment-meta {
+      margin-right: 10px;
+      display: inline-block; }
 
 .msg-modal {
   display: none;

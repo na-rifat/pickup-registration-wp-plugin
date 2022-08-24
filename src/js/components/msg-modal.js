@@ -12,5 +12,7 @@ export function showMsg(content, type) {
 }
 
 export function hideMsg() {
-    parent.hide(dur);
+    setTimeout(() => {
+        parent.hide(dur);
+    }, 3000);
 }

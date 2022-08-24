@@ -2,12 +2,10 @@
 
 namespace pr;
 
-class Activation
-{
-    static function activate()
-    {
+class Activation {
+    static function activate() {
 
-        if (!function_exists('dbDelta')) {
+        if ( ! function_exists( 'dbDelta' ) ) {
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
         }
 
@@ -27,9 +25,10 @@ class Activation
             `request-time` longtext NOT NULL,
             `contact-person` longtext NOT NULL,
             `phone` longtext NOT NULL,
+            `sample_info` longtext NOT NULL,
             PRIMARY KEY (`id`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-        dbDelta($query);
+        dbDelta( $query );
         // Sample info table
         $query = "CREATE TABLE IF NOT EXISTS `{$prefix}pr_reports` (
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -44,9 +43,13 @@ class Activation
             `pdf2` longtext NOT NULL,
             `status` longtext NOT NULL,
             `user_id` longtext NOT NULL,
+            `operation_date` longtext NOT NULL,
+            `sample_date` longtext NOT NULL,
+            `comments` longtext NOT NULL,
+            `sample_id` longtext NOT NULL,
             PRIMARY KEY (`id`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-        dbDelta($query);
+        dbDelta( $query );
         // User reports
         // $query = "CREATE TABLE `{$prefix}_pr_reports` (
         //     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -61,17 +64,15 @@ class Activation
         //    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         // dbDelta($query);
 
-
         // Create pages
-        self::create_page('Manage Orders', '[my_orders]');
-        self::create_page('My Reports', '[my_reports]');
-        self::create_page('Pickup Registration', '[pickup-registration]');
+        self::create_page( 'Manage Orders', '[my_orders]' );
+        self::create_page( 'My Reports', '[my_reports]' );
+        self::create_page( 'Pickup Registration', '[pickup-registration]' );
     }
 
-    static  function create_page($title_of_the_page, $content, $parent_id = NULL)
-    {
-        $objPage = get_page_by_title($title_of_the_page, 'OBJECT', 'page');
-        if (!empty($objPage)) {
+    static function create_page( $title_of_the_page, $content, $parent_id = NULL ) {
+        $objPage = get_page_by_title( $title_of_the_page, 'OBJECT', 'page' );
+        if ( ! empty( $objPage ) ) {
             return;
         }
 
@@ -80,12 +81,12 @@ class Activation
                 'comment_status' => 'close',
                 'ping_status'    => 'close',
                 'post_author'    => 1,
-                'post_title'     => ucwords($title_of_the_page),
-                'post_name'      => strtolower(str_replace(' ', '-', trim($title_of_the_page))),
+                'post_title'     => ucwords( $title_of_the_page ),
+                'post_name'      => strtolower( str_replace( ' ', '-', trim( $title_of_the_page ) ) ),
                 'post_status'    => 'publish',
                 'post_content'   => $content,
                 'post_type'      => 'page',
-                'post_parent'    =>  $parent_id
+                'post_parent'    => $parent_id,
             )
         );
     }

@@ -5,7 +5,7 @@
 
     $reports = $wpdb->get_results(
         $wpdb->prepare(
-            "SELECT * FROM {$prefix}pr_reports WHERE user_id=%d AND status='approved' OR status='completed'",
+            "SELECT * FROM {$prefix}pr_reports WHERE user_id=%d",
             $user_id
         )
     );
@@ -39,49 +39,46 @@
                 </thead>
                 <tbody>
                     <?php $i = 0;?>
-                    <?php foreach ( $reports as $report ) {?>
-                    <tr data-id="<?php echo $report->id ?>">
+<?php foreach ( $reports as $report ) {?>
+                    <tr data-id="<?php echo $report->pickup_id ?>">
 
                         <?php
-                            $order = $wpdb->get_row( "SELECT * FROM {$prefix}pr_orders WHERE id=$report->parent" );
+                            $order = $wpdb->get_row( "SELECT * FROM {$prefix}pickup_info WHERE id=$report->parent" );
                                 $pdf1  = unserialize( $report->pdf1 );
                                 $pdf2  = unserialize( $report->pdf2 );
 
                                 printf( '<td>%s</td>', ++$i );
                                 printf( '<td>%s</td>', $report->order_id );
-                                printf( '<td>%s</td>', $report->operation_date );
-                                printf( '<td>%s</td>', $order->{'contact-person'} );
-                                printf( '<td>%s</td>', $order->phone );
-                                // {
-                                //     $samples = $wpdb->get_results(
-                                //         $wpdb->prepare(
-                                //             "SELECT `sample-name` FROM {$wpdb->prefix}sample_info WHERE pickup_id=%s",
-                                //             $report->pickup_id
-                                //         )
-                                //     );
+                                printf( '<td>%s</td>', $order->{'request-date'} );
+                                printf( '<td>%s</td>', $report->contact_person );
+                                printf( '<td>%s</td>', $report->phone );{
+                                    $samples = $wpdb->get_results(
+                                        $wpdb->prepare(
+                                            "SELECT `sample-name` FROM {$wpdb->prefix}sample_info WHERE pickup_id=%s",
+                                            $report->pickup_id
+                                        )
+                                    );
 
-                                //     $sample_list = [];
+                                    $sample_list = [];
 
-                                //     foreach ( $samples as $sample ) {
-                                //         $sample_list[] = $sample->{'sample-name'};
-                                //     }
+                                    foreach ( $samples as $sample ) {
+                                        $sample_list[] = $sample->{'sample-name'};
+                                    }
 
-                                //     printf( '<td class="tcenter">%s</td>', implode( ', ', $sample_list ) );
-                                // }
-                                printf( '<td class="tcenter">%s</td>', $report->sample_id );
+                                    printf( '<td class="tcenter">%s</td>', implode( ', ', $sample_list ) );
+                                }
+
                                 printf( '<td class="btn-show-detail tcenter"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>' );
 
                                 if ( $report->status == 'approved' ) {
                                     printf( '<td class="pending tcenter">In progress</td>' );
                                 } elseif ( $report->status == 'completed' ) {
-                                    $files = '';
                                     if ( ! empty( $pdf1 ) ) {
-                                        $files .= sprintf( '<a href="%s" target="_blank">PDF1</a>', $pdf1['url'] );
+                                        printf( '<td class="tcenter"><a href="%s" target="_blank">PDF1</a></td>', $pdf1['url'] );
                                     }
                                     if ( ! empty( $pdf2 ) ) {
-                                        $files .= sprintf( ' <a href="%s" target="_blank">PDF2</a>', $pdf2['url'] );
+                                        printf( ', <td class="tcenter"><a href="%s" target="_blank">PDF2</a></td>', $pdf2['url'] );
                                     }
-                                    printf( '<td class="tcenter">%s</td>', $files );
                                 }
                             ?>
                     </tr>

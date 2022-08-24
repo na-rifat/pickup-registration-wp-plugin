@@ -121,14 +121,14 @@
                                         <input required type="text" name="surgeon[]" id="surgeon" />
                                     </td>
                                 </tr>
-                                <!-- <tr>
+                                <tr>
                                       <td>
-                                          <label for="info_phone">Phone</label>
+                                          <label for="operation_date">Operation Date</label>
                                       </td>
                                       <td>
-                                          <input type="text" name="info_phone" id="info_phone" />
+                                          <input required type="date" name="operation_date" id="operation_date" />
                                       </td>
-                                  </tr> -->
+                                  </tr>
                             </table>
                         </div>
                         <div class="add-new-sample">+ Add Sample</div>

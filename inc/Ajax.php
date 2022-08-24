@@ -7,6 +7,8 @@ class Ajax {
         $this->register( 'register_pickup' );
         $this->register( 'pr_approval' );
         $this->register( 'view_detail' );
+        $this->register( 'update_report' );
+        $this->register( 'pr_delete' );
     }
 
     /**
@@ -66,6 +68,7 @@ class Ajax {
                 'request-time'   => pr_var( 'request-time' ),
                 'contact-person' => pr_var( 'contact-person' ),
                 'phone'          => pr_var( 'phone' ),
+                'sample_info'    => implode( ', ', $_POST['sample-name'] ),
             ],
             [
                 '%s',
@@ -107,17 +110,18 @@ class Ajax {
                 $wpdb->insert(
                     "{$prefix}pr_reports",
                     [
-                        'order_id'      => $order_id,
-                        'parent'        => $pickup_id,
-                        'sample-name'   => $_POST['sample-name'][$i],
-                        'sample-info'   => $_POST['sample-info'][$i],
-                        'condition'     => ! empty( $_POST['condition'][$i] ) ? $_POST['condition'][$i] : '',
-                        'specific-info' => $_POST['specific-info'][$i],
-                        'surgeon'       => $_POST['surgeon'][$i],
-                        'pdf1'          => '',
-                        'pdf2'          => '',
-                        'status'        => 'submitted',
-                        'user_id'       => get_current_user_id(),
+                        'order_id'       => $order_id,
+                        'parent'         => $pickup_id,
+                        'sample-name'    => $_POST['sample-name'][$i],
+                        'sample-info'    => $_POST['sample-info'][$i],
+                        'condition'      => ! empty( $_POST['condition'][$i] ) ? $_POST['condition'][$i] : '',
+                        'specific-info'  => $_POST['specific-info'][$i],
+                        'surgeon'        => $_POST['surgeon'][$i],
+                        'pdf1'           => '',
+                        'pdf2'           => '',
+                        'status'         => 'submitted',
+                        'user_id'        => get_current_user_id(),
+                        'operation_date' => $_POST['operation_date'][$i],
                     ],
                     [
                         '%s',
@@ -152,6 +156,13 @@ class Ajax {
         exit;
     }
 
+    /**
+     * Gives approval to view in reports
+     *
+     * Upload PDF1 and PDF2 file
+     *
+     * @return void
+     */
     function pr_approval() {
         self::verify_nonce();
 
@@ -159,77 +170,77 @@ class Ajax {
         $prefix = $wpdb->prefix;
 
         // Get related data
-        foreach ( $_POST['orders'] as $order_id ) {
-            $query = "SELECT * FROM {$prefix}pickup_info WHERE id=%d";
-            $order = $wpdb->get_row( $wpdb->prepare(
+        foreach ( $_POST['orders'] as $report_id ) {
+            $query  = "SELECT * FROM {$prefix}pr_reports WHERE id=%d";
+            $report = $wpdb->get_row( $wpdb->prepare(
                 $query,
-                $order_id
+                $report_id
             ) );
 
+            // wp_send_json_success($report_id);
             // Insert report
-            $file   = $this->handle_file_upload( $_FILES['pdf_' . $order_id] );
-            $status = $file == false ? 'approved' : 'completed';
+            $pdf1   = $this->handle_file_upload( $_FILES['pdf1_' . $report_id] );
+            $pdf2   = $this->handle_file_upload( $_FILES['pdf2_' . $report_id] );
+            $status = $pdf1 == false ? 'approved' : 'completed';
 
-            $report_exists = $wpdb->get_var(
-                "SELECT COUNT(id) FROM {$prefix}pr_reports WHERE pickup_id={$order_id}"
+            // $report_exists = $wpdb->get_var(
+            //     "SELECT COUNT(id) FROM {$prefix}pr_reports WHERE pickup_id={$report_id}"
+            // );
+
+            // if ( $report_exists == 1 ) {
+            // }
+            $updated_order = $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'status' => $status,
+                ],
+                [
+                    'id' => $report->id,
+                ]
             );
 
-            if ( $report_exists == 1 ) {
-                // $report =  $wpdb->insert(
-                //     $prefix . 'pr_reports',
-                //     [
-                //         'order_id' => $order->order_id,
-                //         'pickup_id' => $order->id,
-                //         'contact_person' => $order->{'contact-person'},
-                //         'phone' => $order->phone,
-                //         'file' => $file !== false ? serialize($file) : 'F',
-                //         'status' => $status,
-                //         'user_id' => $order->user_id
-                //     ],
-                //     [
-                //         '%s',
-                //         '%s',
-                //         '%s',
-                //         '%s',
-                //         '%s',
-                //         '%s',
-                //         '%s',
-                //     ]
-                // );
+            // $report_id = $wpdb->get_row(
+            //     "SELECT id FROM {$prefix}pr_reports WHERE pickup_id={$report_id}"
+            // );
+            // $report_id = $report_id->id;
 
-                $updated_order = $wpdb->update(
-                    $prefix . 'pickup_info',
-                    [
-                        'status' => $status,
-                    ],
-                    [
-                        'id' => $order->id,
-                    ]
-                );
-            }
-
-            $report_id = $wpdb->get_row(
-                "SELECT id FROM {$prefix}pr_reports WHERE pickup_id={$order_id}"
-            );
-            $report_id = $report_id->id;
-
-            if ( $file ) {
+            if ( $pdf1 ) {
                 $updated_report = $wpdb->update(
                     $prefix . 'pr_reports',
                     [
-                        'file'   => serialize( $file ),
+                        'pdf1'   => serialize( $pdf1 ),
                         'status' => $status,
                     ],
                     ['id' => $report_id]
                 );
 
                 $updated_order = $wpdb->update(
-                    $prefix . 'pickup_info',
+                    $prefix . 'pr_reports',
                     [
                         'status' => $status,
                     ],
                     [
-                        'id' => $order->id,
+                        'id' => $report->id,
+                    ]
+                );
+            }
+            if ( $pdf2 ) {
+                $updated_report = $wpdb->update(
+                    $prefix . 'pr_reports',
+                    [
+                        'pdf2'   => serialize( $pdf2 ),
+                        'status' => $status,
+                    ],
+                    ['id' => $report_id]
+                );
+
+                $updated_order = $wpdb->update(
+                    $prefix . 'pr_reports',
+                    [
+                        'status' => $status,
+                    ],
+                    [
+                        'id' => $report->id,
                     ]
                 );
             }
@@ -273,5 +284,80 @@ class Ajax {
             'detail' => pr_get_template( 'ajax-sample-detail' ),
         ] );
         exit;
+    }
+
+    function update_report() {
+        self::verify_nonce();
+
+        global $wpdb;
+        $prefix = $wpdb->prefix;
+
+        // wp_send_json_success( $_POST );
+        // exit;
+
+// Update specific info
+        if ( ! empty( pr_var( 'specific-info' ) ) ) {
+            $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'specific-info' => pr_var( 'specific-info' ),
+                ],
+                [
+                    'id' => pr_var( 'id' ),
+                ]
+            );
+        }
+
+// Update comments
+        if ( ! empty( pr_var( 'comment' ) ) ) {
+            $prev_comments = $wpdb->get_row(
+                "SELECT comments from {$prefix}pr_reports WHERE id={$_POST['id']}"
+            );
+
+            $prev_comments = $prev_comments->comments;
+            // wp_send_json_success( $prev_comments );exit;
+            $prev_comments = ! empty( $prev_comments ) ? unserialize( $prev_comments ) : [];
+
+            $prev_comments[] = [
+                'text'     => pr_var( 'comment' ),
+                'user'     => get_current_user(),
+                'datetime' => date( 'Y-m-d H:i:s' ),
+            ];
+
+            $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'comments' => serialize( $prev_comments ),
+                ],
+                [
+                    'id' => pr_var( 'id' ),
+                ]
+            );
+        }
+    }
+
+    function pr_delete() {
+        self::verify_nonce();
+
+        global $wpdb;
+        $prefix = $wpdb->prefix;
+
+        foreach ( $_POST['ordres'] as $order ) {
+            $wpdb->delete(
+                $prefix . 'pr_reports',
+                [
+                    'parent' => $order,
+                ]
+            );
+
+            $wpdb->delete(
+                $prefix . 'pr_orders',
+                [
+                    'id' => $order,
+                ]
+            );
+
+            wp_send_json_success( ['msg' => __( 'Selected orders deleted.' )] );exit;
+        }
     }
 }

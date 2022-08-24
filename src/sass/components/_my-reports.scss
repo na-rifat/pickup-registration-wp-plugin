@@ -32,6 +32,7 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        overflow: auto;
     }
 
     display: none;
@@ -50,6 +51,47 @@
 
         &:hover {
             background-color: rgb(197, 12, 12);
+        }
+    }
+
+    table {
+        border: none;
+        tr {
+            th:first-child {
+                text-align: left;
+                color: #000;
+            }
+        }
+
+        textarea {
+            border: 1px solid #000;
+            outline: none;
+        }
+    }
+    .btn-grp {
+        button {
+            margin-left: auto;
+            display: block;
+        }
+    }
+
+    th,
+    td {
+        border: none;
+    }
+
+    .comments {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        .comment-text {
+            color: #000;
+            margin-right: 20px;
+            display: inline-block;
+        }
+        .comment-meta {
+            margin-right: 10px;
+            display: inline-block;
         }
     }
 }

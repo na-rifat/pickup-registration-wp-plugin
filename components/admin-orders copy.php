@@ -204,7 +204,7 @@
                 <ul class="review-list">
                     <?php foreach ( $orders as $order ) {?>
                     <li data-id="<?php echo $order->id ?>">
-                        <h5><strong>Order: </strong>                                                     <?php echo $order->order_id ?></h5>
+                        <h5><strong>Order: </strong> <?php echo $order->order_id ?></h5>
                         <p><strong>Request date: </strong><?php echo $order->{'request-date'} ?></p>
                         <p><strong>Organization: </strong><?php echo $order->organization ?></p>
                         <p><strong>Pickup date: </strong><?php echo $order->{'pickup-date'} ?></p>
@@ -230,14 +230,17 @@
                                     echo implode( ', ', $sample_list );
                                 ?>
                         </p>
+                        <p><label for="pdf"><span>Upload PDF sample file 1</span><input type="file"
+                                    name="pdf1_<?php echo $order->id ?>" id="pdf"></label></p>
+                        <p><label for="pdf"><span>Upload PDF sample file 2</span><input type="file"
+                                    name="pdf2_<?php echo $order->id ?>" id="pdf"></label></p>
                     </li>
                     <?php }?>
 
                 </ul>
             </form>
             <div class="btn-grp">
-                <div class="btn-close">Close</div>
-                <div class="btn-cancel">Cancel order</div>
+                <div class="btn-cancel">Cancel</div>
                 <div class="btn-confirm">Approve</div>
             </div>
         </div>

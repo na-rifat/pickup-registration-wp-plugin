@@ -1,4 +1,4 @@
-import { showMsg } from "./msg-modal";
+import { hideMsg, showMsg } from "./msg-modal";
 let parent = $(`.sample-registration `);
 let form = parent.find(`form`);
 let pickup_info = parent.find(`.leftcol`);
@@ -22,21 +22,25 @@ sample_info.find(`.add-new-sample`).on(`click`, function (e) {
 
     condY.on(`change`, handleCondY);
     condN.on(`change`, handleCondN);
-
-    // let tableOrigin = parent.find(`.rightcol table`);
-    // let lastTable = tableOrigin.eq(tableOrigin.length - 1);
-
-    // lastTable.find(`.specific-info`).hide(0);
-
-    // $.each(tableOrigin, function (i, val) {
-    //     $(this).find();
-    // });
 });
 
 form.on(`submit`, function (e) {
     e.preventDefault();
     let self = $(this);
     let data = self.serialize();
+    let goAhead = true;
+
+    $.each($(`.condition_y`), function (i, val) {
+        if ($(this).prop(`checked`) == true && goAhead) {
+            goAhead = false;
+        }
+    });
+
+    if (!goAhead) {
+        showMsg(`Samples with ~~ cannot be processed`, `error`);
+        hideMsg();
+        return;
+    }
 
     data += `&nonce=${pr.register_pickup.nonce}&action=register_pickup`;
 
@@ -64,24 +68,8 @@ condN.on(`change`, handleCondN);
 
 function handleCondY(e) {
     $(this).parents(`td`).find(`.condition_n`).prop(`checked`, false);
-
-    // let self = $(this);
-    // let self_parent = self.parents(`table`);
-    // let selfSpecific = self_parent.find(`.specific-info`);
-
-    // if (self.prop(`checked`)) {
-    //     selfSpecific.show(500);
-    // }
 }
 
 function handleCondN(e) {
     $(this).parents(`td`).find(`.condition_y`).prop(`checked`, false);
-
-    // let self = $(this);
-    // let self_parent = self.parents(`table`);
-    // let selfSpecific = self_parent.find(`.specific-info`);
-
-    // if (self.prop(`checked`)) {
-    //     selfSpecific.hide(500);
-    // }
 }
