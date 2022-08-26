@@ -43,13 +43,18 @@ class Init {
         add_menu_page( __( 'Manage orders' ), __( 'Pickup registration' ), 'manage_options', 'pickup-registration', [$this, 'admin_page'], 'dashicons-cart', 0 );
         add_submenu_page( 'pickup-registration', __( 'Manage orders' ), __( 'Manage orders' ), 'manage_options', 'pickup-registration', [$this, 'admin_page'] );
         add_submenu_page( 'pickup-registration', __( 'Manage reports' ), __( 'Manage reports' ), 'manage_options', 'pickup-manage-reports', [$this, 'manage_reports'] );
+        add_submenu_page( 'pickup-registration', __( 'Manage Hours' ), __( 'Manage Hours' ), 'manage_options', 'pickup-manage-hours', [$this, 'manage_hours'] );
     }
 
     function manage_reports() {
-        _pr_get_template('admin-reports');
+        _pr_get_template( 'admin-reports' );
     }
 
     function admin_page() {
         _pr_get_template( 'admin-orders' );
+    }
+
+    function manage_hours() {
+        _pr_get_template( 'admin-hours' );
     }
 }

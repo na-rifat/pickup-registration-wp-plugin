@@ -142,33 +142,48 @@ class Assets {
      */
     public function localize_scripts() {
         wp_localize_script( 'pr-dist-main', 'pr', [
-            'blogname'        => get_option( 'blogname' ),
-            'site_url'        => site_url(),
-            'ajax_url'        => admin_url( 'admin-ajax.php' ),
-            'get_cpt'         =>
+            'blogname'          => get_option( 'blogname' ),
+            'site_url'          => site_url(),
+            'ajax_url'          => admin_url( 'admin-ajax.php' ),
+            'get_cpt'           =>
             [
                 'nonce' => wp_create_nonce( 'get_cpt' ),
             ],
-            'search_cpt'      => [
+            'search_cpt'        => [
                 'nonce' => wp_create_nonce( 'search_cpt' ),
             ],
-            'get_filter'      => [
+            'get_filter'        => [
                 'nonce' => wp_create_nonce( 'get_filter' ),
             ],
-            'register_pickup' => [
+            'register_pickup'   => [
                 'nonce' => wp_create_nonce( 'register_pickup' ),
             ],
-            'pr_approval'     => [
+            'pr_approval'       => [
                 'nonce' => wp_create_nonce( 'pr_approval' ),
             ],
-            'view_detail'     => [
+            'view_detail'       => [
                 'nonce' => wp_create_nonce( 'view_detail' ),
             ],
-            'update_report'   => [
+            'update_report'     => [
                 'nonce' => wp_create_nonce( 'update_report' ),
             ],
-            'pr_delete'       => [
+            'pr_delete'         => [
                 'nonce' => wp_create_nonce( 'pr_delete' ),
+            ],
+            'view_detail_admin' => [
+                'nonce' => wp_create_nonce( 'view_detail_admin' ),
+            ],
+            'dlt_sample_file'   => [
+                'nonce' => wp_create_nonce( 'dlt_sample_file' ),
+            ],
+            'pr_insert_hour'    => [
+                'nonce' => wp_create_nonce( 'pr_insert_hour' ),
+            ],
+            'pr_delete_hour'    => [
+                'nonce' => wp_create_nonce( 'pr_delete_hour' ),
+            ],
+            'pr_available_hour' => [
+                'nonce' => wp_create_nonce( 'pr_available_hour' ),
             ],
         ] );
 

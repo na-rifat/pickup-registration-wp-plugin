@@ -9,6 +9,11 @@ class Ajax {
         $this->register( 'view_detail' );
         $this->register( 'update_report' );
         $this->register( 'pr_delete' );
+        $this->register( 'view_detail_admin' );
+        $this->register( 'dlt_sample_file' );
+        $this->register( 'pr_insert_hour' );
+        $this->register( 'pr_delete_hour' );
+        $this->register( 'pr_available_hour' );
     }
 
     /**
@@ -286,14 +291,20 @@ class Ajax {
         exit;
     }
 
+    function view_detail_admin() {
+        self::verify_nonce();
+
+        wp_send_json_success( [
+            'detail' => pr_get_template( 'ajax-admin-sample-detail' ),
+        ] );
+        exit;
+    }
+
     function update_report() {
         self::verify_nonce();
 
         global $wpdb;
         $prefix = $wpdb->prefix;
-
-        // wp_send_json_success( $_POST );
-        // exit;
 
 // Update specific info
         if ( ! empty( pr_var( 'specific-info' ) ) ) {
@@ -334,6 +345,53 @@ class Ajax {
                 ]
             );
         }
+
+// Update sample ID
+        if ( ! empty( pr_var( 'sample_id' ) ) ) {
+            $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'sample_id' => pr_var( 'sample_id' ),
+                ],
+                [
+                    'id' => pr_var( 'id' ),
+                ]
+            );
+        }
+
+// Handle file upload
+        // wp_send_json_success($_FILES);
+        if ( ! empty( $_FILES['file'] ) ) {
+            $report = $wpdb->get_row(
+                "SELECT * FROM {$prefix}pr_reports WHERE id=" . pr_var( 'id' )
+            );
+
+            // wp_send_json_success( empty( $report->pdf1 ) );exit;
+            $file = self::handle_file_upload( $_FILES['file'] );
+
+            if ( empty( $report->pdf1 ) ) {
+                $wpdb->update(
+                    $prefix . 'pr_reports',
+                    [
+                        'pdf1' => serialize( $file ),
+                    ],
+                    [
+                        'id' => pr_var( 'id' ),
+                    ]
+                );
+            } else if ( empty( $report->pdf2 ) ) {
+                $wpdb->update(
+                    $prefix . 'pr_reports',
+                    [
+                        'pdf2' => serialize( $file ),
+                    ],
+                    [
+                        'id' => pr_var( 'id' ),
+                    ]
+                );
+
+            }
+        }
     }
 
     function pr_delete() {
@@ -359,5 +417,97 @@ class Ajax {
 
             wp_send_json_success( ['msg' => __( 'Selected orders deleted.' )] );exit;
         }
+    }
+
+    function dlt_sample_file() {
+        self::verify_nonce();
+
+        global $wpdb;
+        $prefix = $wpdb->prefix;
+
+        $file = $wpdb->get_row(
+            "SELECT * FROM {$prefix}pr_reports WHERE id=" . pr_var( 'id' )
+        );
+
+        if ( pr_var( 'file' ) == 'pdf1' ) {
+            wp_delete_file( $file->pdf1['dir'] );
+
+            $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'pdf1' => '',
+                ],
+                [
+                    'id' => pr_var( 'id' ),
+                ]
+            );
+        }
+
+        if ( pr_var( 'file' ) == 'pdf2' ) {
+            wp_delete_file( $file->pdf2['dir'] );
+
+            $wpdb->update(
+                $prefix . 'pr_reports',
+                [
+                    'pdf2' => '',
+                ],
+                [
+                    'id' => pr_var( 'id' ),
+                ]
+            );
+
+        }
+
+        wp_send_json_success(
+            [
+                'msg' => 'Deleted.',
+            ]
+        );exit;
+    }
+
+    public function pr_insert_hour() {
+        self::verify_nonce();
+
+        $hour = new Hours();
+        $hour->create();
+
+        wp_send_json_success(
+            [
+                'msg' => __( 'New hour added' ),
+            ]
+        );
+        exit;
+    }
+
+    public function pr_delete_hour() {
+        self::verify_nonce();
+
+        $hour = new Hours();
+        $hour->delete( pr_var( 'id' ) );
+
+        wp_send_json_success(
+            [
+                'msg' => __( 'Hour deleted.' ),
+            ]
+        );exit;
+    }
+
+    public function pr_available_hour() {
+        self::verify_nonce();
+
+        $hour = new Hours();
+
+        if ( pr_var( 'available' ) == 'true' ) {
+            $hour->available( pr_var( 'id' ) );
+        } else {
+            $hour->unavailable( pr_var( 'id' ) );
+        }
+
+        wp_send_json_success(
+            [
+                'msg' => __( 'Availibity changed' ),
+            ]
+        );
+        exit;
     }
 }

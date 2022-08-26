@@ -65,7 +65,8 @@ section.sample-modal {
         gap: 10px;
     }
     .btn-cancel,
-    .btn-confirm , .btn-close{
+    .btn-confirm,
+    .btn-close {
         background-color: #1a8d0f;
         padding: 10px 20px;
         font-weight: bold;
@@ -83,7 +84,7 @@ section.sample-modal {
             background-color: red;
         }
 
-        &.btn-close{
+        &.btn-close {
             background-color: #dd7520;
         }
     }
@@ -111,5 +112,20 @@ section.sample-modal {
                 display: block;
             }
         }
+    }
+}
+
+.file-uploader {
+    padding: 40px 50px;
+    border-radius: 10px;
+    background-color: #ccc;
+}
+
+.dlt-file {
+    margin-left: 10px;
+    transition: 0.3s all linear;
+    cursor: pointer;
+    &:hover {
+        color: red;
     }
 }

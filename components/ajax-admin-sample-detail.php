@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Sample ID_AB</th>
-                <td><input type="text" name="sample_id" id="sample_id" value="<?php echo $report->sample_id ?>"></td>
+                <td><?php echo $report->sample_id ?></td>
             </tr>
             <tr>
                 <th>Sample info</th>
@@ -49,14 +49,21 @@
                 <td>
                     <!-- PDF1 -->
                     <?php if ( ! empty( $report->pdf1 ) ): ?>
-                    <?php $pdf1 = unserialize( $report->pdf1 )?>
-                    <p><a href="<?php echo $pdf1['url'] ?>" target="_blank">Preview PDF1</a></p>
+<?php $pdf1 = unserialize( $report->pdf1 )?>
+                    <p><a href="<?php echo $pdf1['url'] ?>" target="_blank">Preview PDF1</a><span class="dlt-file"
+                            data-file="pdf2" data-id="<?php echo $report->id ?>">Delete</span></p>
                     <?php endif;?>
                     <!-- PDF2 -->
                     <?php if ( ! empty( $report->pdf2 ) ): ?>
-                    <?php $pdf2 = unserialize( $report->pdf2 )?>
-                    <p><a href="<?php echo $pdf2['url'] ?>" target="_blank">Preview PDF2</a></p>
+<?php $pdf2 = unserialize( $report->pdf2 )?>
+                    <p><a href="<?php echo $pdf2['url'] ?>" target="_blank">Preview PDF2</a><span class="dlt-file"
+                            data-file="pdf2" data-id="<?php echo $report->id ?>">Delete</span></p>
                     <?php endif;?>
+
+                    <?php if ( empty( $report->pdf1 ) || empty( $report->pdf2 ) ) {?>
+                    <p class="file-uploader"><label for="pdf"><span>Upload PDF sample file</span>&nbsp;<input type="file"
+                                name="file" id="file"></label></p>
+                    <?php }?>
                 </td>
             </tr>
             <tr>
@@ -64,7 +71,7 @@
                 <td>
                     <ul class="comments">
                         <?php $comments = unserialize( $report->comments )?>
-                        <?php foreach ( $comments as $comment ): ?>
+<?php foreach ( $comments as $comment ): ?>
                         <li><span class="comment-text"><?php echo $comment['text'] ?></span><span
                                 class="comment-meta">(<?php echo $comment['user'] ?>&nbsp;&nbsp;<?php echo $comment['datetime'] ?>)</span>
                         </li>

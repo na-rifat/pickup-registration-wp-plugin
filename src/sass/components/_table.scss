@@ -2,7 +2,9 @@
     border-radius: 15px;
     border-collapse: collapse;
     overflow: hidden;
-    border: 1px solid #000;
+    border: 1px solid #ccc;
+
+    box-shadow: 0 0 3px #ccc;
     td,
     th {
         padding: 10px 15px;

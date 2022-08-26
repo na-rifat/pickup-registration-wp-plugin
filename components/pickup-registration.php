@@ -1,4 +1,8 @@
-<?php $user = get_current_user_id()?>
+<?php
+
+    use pr\Hours;
+
+$user = get_current_user_id()?>
 <!-- Sample pickup registration -->
 <section class="sample-registration pr-section">
     <div class="container">
@@ -44,7 +48,18 @@
                                     <label for="request-time">Request Time</label>
                                 </td>
                                 <td>
-                                    <input required type="time" name="request-time" id="request-time" />
+                                    <!-- <input required type="time" name="request-time" id="request-time" /> -->
+                                    <input type="hidden" name="request-time" id="request-time" value="">
+                                    <?php
+                                        $hours = new Hours();
+                                        $hours = $hours->get_all();
+
+                                        echo '<ul class="customer-times">';
+                                        foreach ( $hours as $hour ) {
+                                            printf( '<li class="%s">%s</li>', $hour->available == 'true' ? 'available' : 'unavailable', $hour->time );
+                                        }
+                                        echo '</ul>';
+                                    ?>
                                 </td>
                             </tr>
                             <tr>

@@ -100,11 +100,28 @@
   .sample-registration form td {
     vertical-align: middle; }
 
+.sample-registration .customer-times {
+  list-style-type: none;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0;
+  margin: 0; }
+  .sample-registration .customer-times li {
+    padding: 8px 16px;
+    border: 1px solid #ccc; }
+    .sample-registration .customer-times li.available {
+      cursor: pointer; }
+    .sample-registration .customer-times li.unavailable {
+      cursor: not-allowed;
+      background-color: #ddd; }
+
 .pr-table {
   border-radius: 15px;
   border-collapse: collapse;
   overflow: hidden;
-  border: 1px solid #000; }
+  border: 1px solid #ccc;
+  box-shadow: 0 0 3px #ccc; }
   .pr-table td,
   .pr-table th {
     padding: 10px 15px;
@@ -177,7 +194,8 @@ section.sample-modal {
     align-items: center;
     gap: 10px; }
   section.sample-modal .btn-cancel,
-  section.sample-modal .btn-confirm, section.sample-modal .btn-close {
+  section.sample-modal .btn-confirm,
+  section.sample-modal .btn-close {
     background-color: #1a8d0f;
     padding: 10px 20px;
     font-weight: bold;
@@ -186,14 +204,17 @@ section.sample-modal {
     transition: 0.3s all linear;
     cursor: pointer; }
     section.sample-modal .btn-cancel:hover,
-    section.sample-modal .btn-confirm:hover, section.sample-modal .btn-close:hover {
+    section.sample-modal .btn-confirm:hover,
+    section.sample-modal .btn-close:hover {
       transform: scale(0.9);
       box-shadow: 0 0 3px #ccc; }
     section.sample-modal .btn-cancel.btn-cancel,
-    section.sample-modal .btn-confirm.btn-cancel, section.sample-modal .btn-close.btn-cancel {
+    section.sample-modal .btn-confirm.btn-cancel,
+    section.sample-modal .btn-close.btn-cancel {
       background-color: red; }
     section.sample-modal .btn-cancel.btn-close,
-    section.sample-modal .btn-confirm.btn-close, section.sample-modal .btn-close.btn-close {
+    section.sample-modal .btn-confirm.btn-close,
+    section.sample-modal .btn-close.btn-close {
       background-color: #dd7520; }
   section.sample-modal ul.review-list {
     display: flex;
@@ -213,12 +234,43 @@ section.sample-modal {
       section.sample-modal ul.review-list li.in-list {
         display: block; }
 
+.file-uploader {
+  padding: 40px 50px;
+  border-radius: 10px;
+  background-color: #ccc; }
+
+.dlt-file {
+  margin-left: 10px;
+  transition: 0.3s all linear;
+  cursor: pointer; }
+  .dlt-file:hover {
+    color: red; }
+
 .customer-report .btn-show-detail {
   cursor: pointer; }
   .customer-report .btn-show-detail i {
     transition: 0.3s all ease; }
   .customer-report .btn-show-detail:hover i {
     transform: scale(1.1); }
+
+.btn-show-detail {
+  cursor: pointer; }
+  .btn-show-detail i {
+    transition: 0.3s all ease; }
+  .btn-show-detail:hover i {
+    transform: scale(1.1); }
+
+.update-report {
+  padding: 15px 30px;
+  background: #6ec1e4;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.3s all linear; }
+  .update-report:hover {
+    transform: scale(0.9); }
 
 .report-modal {
   position: fixed;
@@ -234,7 +286,7 @@ section.sample-modal {
   display: none; }
   .report-modal .wrapper {
     padding: 30px;
-    width: 80vw;
+    width: 60vw;
     height: 90vh;
     background: white;
     position: absolute;
@@ -257,19 +309,23 @@ section.sample-modal {
     .report-modal .cls-btn:hover {
       background-color: #c50c0c; }
   .report-modal table {
-    border: none; }
+    border: none;
+    width: 100%; }
     .report-modal table tr th:first-child {
       text-align: left;
       color: #000; }
     .report-modal table textarea {
       border: 1px solid #000;
-      outline: none; }
+      outline: none;
+      width: 100%;
+      border-radius: 0; }
   .report-modal .btn-grp button {
     margin-left: auto;
     display: block; }
   .report-modal th,
   .report-modal td {
-    border: none; }
+    border: none;
+    padding: 6px; }
   .report-modal .comments {
     padding: 0;
     margin: 0;
@@ -307,6 +363,18 @@ section.sample-modal {
   .msg-modal.error .inner {
     background-color: red;
     box-shadow: 0 4px 20px red; }
+
+.pr-hours .new-hour {
+  margin-bottom: 100px; }
+  .pr-hours .new-hour td {
+    padding: 10px; }
+
+.pr-hours .dlt-hour {
+  color: red;
+  transition: 0.3s all linear;
+  cursor: pointer; }
+  .pr-hours .dlt-hour:hover {
+    transform: scale(1.05); }
 
 .pr-section {
   margin: 100px 0; }

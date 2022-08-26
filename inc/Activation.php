@@ -50,6 +50,14 @@ class Activation {
             PRIMARY KEY (`id`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         dbDelta( $query );
+        //  pr_hours table
+        $query = "CREATE TABLE IF NOT EXISTS `{$prefix}pr_hours` (
+            `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+            `time` longtext NOT NULL,
+            `available` longtext NOT NULL,
+            PRIMARY KEY (`id`)
+           ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
+        dbDelta( $query );
         // User reports
         // $query = "CREATE TABLE `{$prefix}_pr_reports` (
         //     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
