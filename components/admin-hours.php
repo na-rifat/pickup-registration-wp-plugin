@@ -1,6 +1,6 @@
 <?php
-    $hours = New \pr\Hours();
-    $hours = $hours->get_all();
+    $hours_root = New \pr\Hours();
+    $hours      = $hours_root->get_all();
 ?>
 <section class="customer-orders pr-section admin-orders pr-hours">
     <div class="container">
@@ -15,8 +15,19 @@
                             <td><input type="time" name="time" id="time" required></td>
                         </tr>
                         <tr>
-                            <th class="tright"><label for="available">Available</label></th>
-                            <td><input type="checkbox" name="available" id="available" value="true" ></td>
+                            <!-- <th class="tright"><label for="available">Available</label></th>
+                            <td><input type="checkbox" name="available" id="available"></td> -->
+                        </tr>
+                        <tr>
+                            <th>Availability</th>
+                            <td>
+                                <?php foreach ( $hours_root::days as $day ): ?>
+                                <div class="day-grp">
+                                    <input type="checkbox" name="<?php echo $day ?>" id="<?php echo $day ?>">
+                                    <label for="<?php echo $day ?>"><?php echo $day ?></label>
+                                </div>
+                                <?php endforeach;?>
+                            </td>
                         </tr>
 
                         <tr>
@@ -40,16 +51,25 @@
                     <thead>
                         <tr>
                             <th>Time</th>
-                            <th>Available</th>
-                            <th>Delete</th>
+                            <th>Availability</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ( $hours as $hour ): ?>
                         <tr data-id="<?php echo $hour->id ?>">
                             <td class="tcenter"><?php echo $hour->time ?></td>
-                            <td class="tcenter"><input type="checkbox" name="available"
-                                    <?php echo $hour->available == true ? 'checked' : '' ?> class="time-availibity">
+                            <td class="tcenter">
+                                <div class="day-holder">
+                                    <?php foreach ( $hours_root::days as $day ): ?>
+                                    <div class="day-grp">
+                                        <input type="checkbox" name="<?php echo $day ?>"
+                                            <?php echo $hour->{$day} == true ? 'checked' : '' ?>
+                                            class="time-availibity" id="<?php echo $day . $hour->id ?>" data-day="<?php echo $day ?>">
+                                        <label for="<?php echo $day . $hour->id ?>"><?php echo $day ?></label>
+                                    </div>
+                                    <?php endforeach;?>
+                                </div>
                             </td>
                             <td class="dlt-hour tcenter">DELETE</td>
                         </tr>

@@ -3,7 +3,11 @@
 namespace pr;
 
 class Ajax {
+    private $database;
+
     function __construct() {
+        $this->database = new Database();
+
         $this->register( 'register_pickup' );
         $this->register( 'pr_approval' );
         $this->register( 'view_detail' );
@@ -14,6 +18,8 @@ class Ajax {
         $this->register( 'pr_insert_hour' );
         $this->register( 'pr_delete_hour' );
         $this->register( 'pr_available_hour' );
+        $this->register( 'pr_get_hours' );
+        $this->register( 'pr_cancel_order' );
     }
 
     /**
@@ -108,6 +114,16 @@ class Ajax {
                     'id' => $wpdb->insert_id,
                 ]
             );
+
+            $wpdb->update(
+                $prefix . 'pr_hours',
+                [
+                    'available' => '',
+                ],
+                [
+                    'id' => pr_var( 'request-time' ),
+                ]
+            );
         }
 
         if ( ! empty( $_POST['sample-name'] ) ) {
@@ -175,80 +191,28 @@ class Ajax {
         $prefix = $wpdb->prefix;
 
         // Get related data
-        foreach ( $_POST['orders'] as $report_id ) {
-            $query  = "SELECT * FROM {$prefix}pr_reports WHERE id=%d";
-            $report = $wpdb->get_row( $wpdb->prepare(
-                $query,
-                $report_id
-            ) );
+        foreach ( $_POST['orders'] as $order_id ) {
+            $order = $this->database->get_one( 'pr_orders', $order_id );
 
-            // wp_send_json_success($report_id);
-            // Insert report
-            $pdf1   = $this->handle_file_upload( $_FILES['pdf1_' . $report_id] );
-            $pdf2   = $this->handle_file_upload( $_FILES['pdf2_' . $report_id] );
-            $status = $pdf1 == false ? 'approved' : 'completed';
-
-            // $report_exists = $wpdb->get_var(
-            //     "SELECT COUNT(id) FROM {$prefix}pr_reports WHERE pickup_id={$report_id}"
-            // );
-
-            // if ( $report_exists == 1 ) {
-            // }
-            $updated_order = $wpdb->update(
-                $prefix . 'pr_reports',
+            $this->database->update(
+                'pr_orders',
                 [
-                    'status' => $status,
+                    'status' => 'approved',
                 ],
-                [
-                    'id' => $report->id,
-                ]
+                $order_id
             );
 
-            // $report_id = $wpdb->get_row(
-            //     "SELECT id FROM {$prefix}pr_reports WHERE pickup_id={$report_id}"
-            // );
-            // $report_id = $report_id->id;
+            $this->database->update(
+                'pr_reports',
+                [
+                    'status' => 'approved',
+                ],
+                $order_id,
+                'parent'
+            );
 
-            if ( $pdf1 ) {
-                $updated_report = $wpdb->update(
-                    $prefix . 'pr_reports',
-                    [
-                        'pdf1'   => serialize( $pdf1 ),
-                        'status' => $status,
-                    ],
-                    ['id' => $report_id]
-                );
-
-                $updated_order = $wpdb->update(
-                    $prefix . 'pr_reports',
-                    [
-                        'status' => $status,
-                    ],
-                    [
-                        'id' => $report->id,
-                    ]
-                );
-            }
-            if ( $pdf2 ) {
-                $updated_report = $wpdb->update(
-                    $prefix . 'pr_reports',
-                    [
-                        'pdf2'   => serialize( $pdf2 ),
-                        'status' => $status,
-                    ],
-                    ['id' => $report_id]
-                );
-
-                $updated_order = $wpdb->update(
-                    $prefix . 'pr_reports',
-                    [
-                        'status' => $status,
-                    ],
-                    [
-                        'id' => $report->id,
-                    ]
-                );
-            }
+            $hours = new Hours();
+            $hours->available( $order->{'request-time'} );
         }
     }
 
@@ -397,26 +361,13 @@ class Ajax {
     function pr_delete() {
         self::verify_nonce();
 
-        global $wpdb;
-        $prefix = $wpdb->prefix;
+        foreach ( $_POST['orders'] as $order ) {
+            $this->database->delete( 'pr_reports', $order, 'parent' );
 
-        foreach ( $_POST['ordres'] as $order ) {
-            $wpdb->delete(
-                $prefix . 'pr_reports',
-                [
-                    'parent' => $order,
-                ]
-            );
-
-            $wpdb->delete(
-                $prefix . 'pr_orders',
-                [
-                    'id' => $order,
-                ]
-            );
-
-            wp_send_json_success( ['msg' => __( 'Selected orders deleted.' )] );exit;
+            $this->database->delete( 'pr_orders', $order );
         }
+
+        wp_send_json_success( ['msg' => __( 'Selected orders deleted.' )] );exit;
     }
 
     function dlt_sample_file() {
@@ -497,7 +448,7 @@ class Ajax {
 
         $hour = new Hours();
 
-        if ( pr_var( 'available' ) == 'true' ) {
+        if ( pr_var( pr_var( 'selectedDay' ) ) == 'true' ) {
             $hour->available( pr_var( 'id' ) );
         } else {
             $hour->unavailable( pr_var( 'id' ) );
@@ -508,6 +459,48 @@ class Ajax {
                 'msg' => __( 'Availibity changed' ),
             ]
         );
+        exit;
+    }
+
+    public function pr_get_hours() {
+        self::verify_nonce();
+
+        $hours = new Hours();
+
+        wp_send_json_success(
+            [
+                'hours' => $hours->date_to_hours(),
+            ]
+        );exit;
+    }
+
+    public function pr_cancel_order() {
+        self::verify_nonce();
+        // wp_send_json_success( $_POST );exit;
+        foreach ( $_POST['orders'] as $order ) {
+            $order = $this->database->get_one( 'pr_orders', $order );
+
+            $hours = new Hours();
+            $hours->unassign( $order->{'request-time'} );
+
+            $this->database->update(
+                'pr_reports',
+                ['status' => 'canceled'],
+                $order,
+                'parent'
+            );
+
+            $this->database->update(
+                'pr_orders',
+                ['status' => 'canceled'],
+                $order,
+            );
+
+        }
+
+        wp_send_json_success( [
+            'msg' => __( 'Orders canceled.' ),
+        ] );
         exit;
     }
 }

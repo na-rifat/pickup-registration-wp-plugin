@@ -185,6 +185,12 @@ class Assets {
             'pr_available_hour' => [
                 'nonce' => wp_create_nonce( 'pr_available_hour' ),
             ],
+            'pr_get_hours'      => [
+                'nonce' => wp_create_nonce( 'pr_get_hours' ),
+            ],
+            'pr_cancel_order'   => [
+                'nonce' => wp_create_nonce( 'pr_cancel_order' ),
+            ],
         ] );
 
         // wp_enqueue_script( 'pr-dist-main-js' );

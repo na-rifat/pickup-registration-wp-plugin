@@ -17,17 +17,6 @@ const dltBtn = parent.find(`.delete-orders-btn`);
 
 const sortingForm = parent.find(`#sorting`);
 
-orderApprovalSelection.on(`change`, function (e) {
-    let self = $(this);
-    let parent = self.parents(`tr`);
-
-    if (self.prop(`checked`)) {
-        parent.addClass(`selected`);
-    } else {
-        parent.removeClass(`selected`);
-    }
-});
-
 bulkApprovalBtn.on(`click`, function (e) {
     e.preventDefault();
 
@@ -72,7 +61,7 @@ btnModalClose.on(`click`, function (e) {
 });
 
 btnModalCancel.on(`click`, function (e) {
-    if (confirm("Are you sure to cancel the selected orders?")) {
+    if (confirm("Are you sure to delete the selected orders?")) {
         let selectedRows = reviewList.find(`.in-list`);
         let data = new FormData();
 
@@ -80,7 +69,10 @@ btnModalCancel.on(`click`, function (e) {
         data.append("nonce", pr.pr_cancel_order.nonce);
 
         $.each(selectedRows, function (i, val) {
+            let file_el = $(this).find(`input[type="file"]`);
+
             data.append("orders[]", $(this).data(`id`));
+            data.append(file_el.attr(`name`), file_el[0].files[0]);
         });
 
         $.ajax({
@@ -91,9 +83,9 @@ btnModalCancel.on(`click`, function (e) {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.success) {
-                    showMsg(res.data.msg, "success");
+                    showMsg(data.res.msg, "success");
 
                     setTimeout(() => {
                         window.location.reload();
@@ -116,10 +108,10 @@ btnModalConfirm.on(`click`, function (e) {
     data.append("nonce", pr.pr_approval.nonce);
 
     $.each(selectedRows, function (i, val) {
-        // let file_el = $(this).find(`input[type="file"]`);
+        let file_el = $(this).find(`input[type="file"]`);
 
         data.append("orders[]", $(this).data(`id`));
-        // data.append(file_el.attr(`name`), file_el[0].files[0]);
+        data.append(file_el.attr(`name`), file_el[0].files[0]);
     });
 
     $.ajax({
@@ -144,16 +136,17 @@ sortingForm.on(`change`, function (e) {
 
 dltBtn.on(`click`, function (e) {
     if (confirm("Are you sure to delete the selected orders?")) {
-        let self = $(this);
-        let tableParent = $(`.new-orders-table`);
-        let selectedRows = tableParent.find(`tr.selected`);
+        let selectedRows = reviewList.find(`.in-list`);
         let data = new FormData();
 
         data.append("action", "pr_delete");
         data.append("nonce", pr.pr_delete.nonce);
 
         $.each(selectedRows, function (i, val) {
+            let file_el = $(this).find(`input[type="file"]`);
+
             data.append("orders[]", $(this).data(`id`));
+            data.append(file_el.attr(`name`), file_el[0].files[0]);
         });
 
         $.ajax({
@@ -164,8 +157,8 @@ dltBtn.on(`click`, function (e) {
             contentType: false,
             processData: false,
             success: function (res) {
-                console.log(res);
-                showMsg(res.data.msg, "success");
+                // console.log(res);
+                showMsg(data.res.msg, "success");
 
                 setTimeout(() => {
                     window.location.reload();

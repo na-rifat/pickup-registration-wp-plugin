@@ -18,6 +18,11 @@
 
             &.available {
                 cursor: pointer;
+                transition: 0.3s all linear;
+                &.active {
+                    background-color: black;
+                    color: white;
+                }
             }
 
             &.unavailable {
@@ -25,5 +30,15 @@
                 background-color: #ddd;
             }
         }
+    }
+
+    .agreement {
+        .terms {
+            max-height: 150px;
+            border: 2px solid #ccc;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        margin-bottom: 30px;
     }
 }

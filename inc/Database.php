@@ -15,7 +15,7 @@ namespace pr;
 class Database {
 
     private $db;
-    private $prefix;
+    public $prefix;
 
     function __construct() {
         global $wpdb;
@@ -78,10 +78,10 @@ class Database {
      * @param  string|int $id
      * @return mixed
      */
-    public function delete( $table_name, $id ) {
+    public function delete( $table_name, $id, $identifier = 'id' ) {
         return $this->db->delete(
             $this->prefix . $table_name,
-            ['id' => $id]
+            [$identifier => $id]
         );
     }
 
@@ -98,6 +98,12 @@ class Database {
     public function get_all( $table_name ) {
         return $this->db->get_results(
             "SELECT * FROM {$this->prefix}$table_name;"
+        );
+    }
+
+    public function get_all_filtered( $table_name, $id, $identifier = 'id' ) {
+        return $this->db->get_results(
+            "SELECT * FROM {$this->prefix}$table_name WHERE `{$identifier}`='{$id}';"
         );
     }
 
@@ -129,5 +135,9 @@ class Database {
     public function get_sorted( $table_name, $sorting_col, $sort_type = 'DESC' ) {}
 
     public function get_paginated_sorted( $table_name, $sorting_col, $sort_type = 'DESC', $from = 0, $to = 20 ) {}
+
+    public function get_results( $query ) {
+        return $this->db->get_results( $query );
+    }
 
 }

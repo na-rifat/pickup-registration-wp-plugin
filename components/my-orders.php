@@ -37,13 +37,14 @@
                 </thead>
                 <tbody>
                     <?php foreach ( $orders as $order ) {?>
+                    <?php $request_time = \pr\Hours::get_hour( $order->{'request-time'} )?>
                     <tr>
                         <td class="<?php echo $order->status ?>"><?php echo ucfirst( $order->status ) ?></td>
                         <td><?php echo $order->order_id ?></td>
                         <td><?php echo $order->{'request-date'} ?></td>
                         <td><?php echo $order->organization ?></td>
                         <td><?php echo $order->{'pickup-date'} ?></td>
-                        <td><?php echo $order->{'request-time'} ?></td>
+                        <td><?php echo $request_time->time ?></td>
                         <td><?php echo $order->{'contact-person'} ?></td>
                         <td><?php echo $order->phone ?></td>
                         <td>

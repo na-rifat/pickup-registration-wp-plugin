@@ -1,4 +1,5 @@
 import { hideMsg, showMsg } from "./msg-modal";
+
 let parent = $(`.sample-registration `);
 let form = parent.find(`form`);
 let pickup_info = parent.find(`.leftcol`);
@@ -8,6 +9,8 @@ let btnSubmit = parent.find(`button[type=submit]`);
 let specificInfo = parent.find(`#specific-info`).parents(`tr`);
 let condY = $(`.condition_y`);
 let condN = $(`.condition_n`);
+let times = $(`.customer-times .available`);
+let requestDate = form.find(`#request-date`);
 
 // specificInfo.slideUp(0);
 
@@ -29,6 +32,16 @@ form.on(`submit`, function (e) {
     let self = $(this);
     let data = self.serialize();
     let goAhead = true;
+
+    let timer = $(`#request-time`);
+    // console.log(timer.val().length);
+
+    // return;
+    if (timer.val().length == 0) {
+        showMsg("Please select a time.", `error`);
+        hideMsg();
+        return;
+    }
 
     $.each($(`.condition_y`), function (i, val) {
         if ($(this).prop(`checked`) == true && goAhead) {
@@ -73,3 +86,45 @@ function handleCondY(e) {
 function handleCondN(e) {
     $(this).parents(`td`).find(`.condition_y`).prop(`checked`, false);
 }
+
+times.on(`click`, function (e) {
+    let self = $(this);
+    let timer = $(`#request-time`);
+
+    times.removeClass(`active`);
+    timer.val(self.data(`id`));
+    self.addClass(`active`);
+});
+
+requestDate.on(`change`, function (e) {
+    let self = $(this);
+    let hoursHolder = form.find(".request-date-holder");
+
+    let data = {
+        action: "pr_get_hours",
+        nonce: pr.pr_get_hours.nonce,
+        date: self.val(),
+    };
+
+    $.ajax({
+        type: "POST",
+        url: pr.ajax_url,
+        data,
+        dataType: `JSON`,
+        success: function (res) {
+            if (res.success) {
+                hoursHolder.html(res.data.hours);
+
+                times = $(`.customer-times .available`);
+                times.on(`click`, function (e) {
+                    let self = $(this);
+                    let timer = $(`#request-time`);
+
+                    times.removeClass(`active`);
+                    timer.val(self.data(`id`));
+                    self.addClass(`active`);
+                });
+            }
+        },
+    });
+});

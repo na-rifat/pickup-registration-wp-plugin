@@ -6,6 +6,9 @@ const newHourForm = newHour.find(`form`);
 const hoursList = parent.find(`.hours table`);
 const dltBtn = $(`.dlt-hour`);
 const btnAvailibility = $(`.time-availibity`);
+const tab = parent.find(`.hours-tab`);
+const tabIndex = tab.find(`.tab-index`);
+const tabBody = tab.find(`.tab`);
 
 newHourForm.on(`submit`, function (e) {
     e.preventDefault();
@@ -60,12 +63,14 @@ dltBtn.on(`click`, function (e) {
 
 btnAvailibility.on(`change`, function (e) {
     let self = $(this);
+    let day = self.data(`day`);
     let parent = self.parents(`tr`);
     let data = {
         nonce: pr.pr_available_hour.nonce,
         action: `pr_available_hour`,
         id: parent.data(`id`),
-        available: self.prop(`checked`),
+        [day]: self.prop(`checked`),
+        selectedDay: day,
     };
 
     $.ajax({
@@ -79,4 +84,10 @@ btnAvailibility.on(`change`, function (e) {
             }
         },
     });
+});
+
+tabIndex.on(`click`, function (e) {
+    let self = $(this);
+    tabIndex.removeClass(`active`);
+    self.addClass(`active`);
 });

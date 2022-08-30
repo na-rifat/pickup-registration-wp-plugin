@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Sample ID_AB</th>
-                <td><input type="text" name="sample_id" id="sample_id" value="<?php echo $report->sample_id ?>"></td>
+                <td><?php echo $report->sample_id ?></td>
             </tr>
             <tr>
                 <th>Sample info</th>

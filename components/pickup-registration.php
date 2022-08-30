@@ -40,7 +40,8 @@ $user = get_current_user_id()?>
                                     <label for="request-date">Request Date</label>
                                 </td>
                                 <td>
-                                    <input required type="date" name="request-date" id="request-date" />
+                                    <input required type="date" name="request-date" id="request-date"
+                                        value="<?php echo date( 'Y-m-d' ) ?>" />
                                 </td>
                             </tr>
                             <tr>
@@ -50,16 +51,12 @@ $user = get_current_user_id()?>
                                 <td>
                                     <!-- <input required type="time" name="request-time" id="request-time" /> -->
                                     <input type="hidden" name="request-time" id="request-time" value="">
-                                    <?php
-                                        $hours = new Hours();
-                                        $hours = $hours->get_all();
-
-                                        echo '<ul class="customer-times">';
-                                        foreach ( $hours as $hour ) {
-                                            printf( '<li class="%s">%s</li>', $hour->available == 'true' ? 'available' : 'unavailable', $hour->time );
-                                        }
-                                        echo '</ul>';
-                                    ?>
+                                    <div class="request-date-holder">
+                                        <?php
+                                            $hours = new Hours();
+                                            echo $hours->get_todays_hours();
+                                        ?>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -125,7 +122,8 @@ $user = get_current_user_id()?>
                                         <label for="specific-info">Specific Info</label>
                                     </td>
                                     <td>
-                                        <input type="text" name="specific-info[]" id="specific-info" />
+                                        <textarea name="specific-info[]" id="specific-info" cols="30"
+                                            rows="3"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -137,16 +135,33 @@ $user = get_current_user_id()?>
                                     </td>
                                 </tr>
                                 <tr>
-                                      <td>
-                                          <label for="operation_date">Operation Date</label>
-                                      </td>
-                                      <td>
-                                          <input required type="date" name="operation_date" id="operation_date" />
-                                      </td>
-                                  </tr>
+                                    <td>
+                                        <label for="operation_date">Operation Date</label>
+                                    </td>
+                                    <td>
+                                        <input required type="date" name="operation_date" id="operation_date" />
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                         <div class="add-new-sample">+ Add Sample</div>
+                        <div class="agreement">
+                            <div class="agreement-grp">
+                                <input type="checkbox" name="agreement" id="agreement" required>
+                                <label for="agreement">I agree to the terms and conditions *</label>
+                            </div>
+                            <div class="terms">
+                                <h3>Term 1</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque consectetur dicta
+                                    quisquam, est sed non ex officia ab, ipsa, recusandae porro molestias tempora
+                                    obcaecati praesentium ullam provident quis dolor omnis.</p>
+                                <h3>Term 2</h3>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quos dolorem
+                                    veniam similique obcaecati nam odio reprehenderit doloribus assumenda quo cum
+                                    consequuntur laboriosam excepturi blanditiis, placeat iste adipisci esse aliquam
+                                    odit fuga in laudantium sapiente! Perferendis cum sapiente debitis animi!</p>
+                            </div>
+                        </div>
                         <div class="btn-grp">
                             <button type="submit">Submit</button>
                         </div>

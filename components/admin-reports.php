@@ -3,7 +3,7 @@
     $prefix = $wpdb->prefix;
 
     $reports = $wpdb->get_results(
-        "SELECT * FROM {$prefix}pr_reports;"
+        "SELECT * FROM {$prefix}pr_reports WHERE status='approved' OR status='completed';"
     );
 ?>
 
@@ -65,7 +65,7 @@
                             printf( '<td class="tcenter">%s</td>', $report->sample_id );
                             printf( '<td class="btn-show-detail tcenter"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>' );
 
-                            if ( $report->status == 'approved' ) {
+                            if ( $report->status == 'approved' && empty( $pdf1 ) ) {
                                 printf( '<td class="pending tcenter">In progress</td>' );
                             } elseif ( $report->status == 'completed' ) {
                                 $files = '';
@@ -83,6 +83,7 @@
                 </tbody>
             </table>
             <?php else: ?>
+            <h4>There is no reports.</h4>
             <?php endif;?>
         </div>
     </div>

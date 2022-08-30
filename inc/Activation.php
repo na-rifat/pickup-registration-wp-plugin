@@ -55,6 +55,13 @@ class Activation {
             `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
             `time` longtext NOT NULL,
             `available` longtext NOT NULL,
+            `Sunday` longtext NOT NULL,
+            `Monday` longtext NOT NULL,
+            `Tuesday` longtext NOT NULL,
+            `Wednesday` longtext NOT NULL,
+            `Thursday` longtext NOT NULL,
+            `Friday` longtext NOT NULL,
+            `Saturday` longtext NOT NULL,
             PRIMARY KEY (`id`)
            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
         dbDelta( $query );

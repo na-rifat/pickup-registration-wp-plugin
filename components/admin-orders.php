@@ -17,7 +17,7 @@
         );
     } else {
         $orders = $wpdb->get_results(
-            "SELECT * FROM {$prefix}pr_orders ORDER BY '{$_GET['sorting']}' ASC"
+            "SELECT * FROM {$prefix}pr_orders ORDER BY `{$_GET['sorting']}` ASC"
         );
     }
 ?>
@@ -34,7 +34,7 @@
             <?php if ( empty( $new_orders ) ) {?>
             <h4>No new orders found!</h4>
             <?php } else {?>
-            <table class="pr-table">
+            <table class="pr-table new-orders-table">
                 <thead>
                     <tr>
                         <th>Select</th>
@@ -51,6 +51,7 @@
                 </thead>
                 <tbody>
                     <?php foreach ( $new_orders as $order ) {?>
+                    <?php $request_time = \pr\Hours::get_hour( $order->{'request-time'} )?>
                     <tr data-id="<?php echo $order->id ?>">
                         <td data-id="<?php echo $order->id ?>"><input type="checkbox" name="approve_list[]"
                                 id="approve_list" class="approve-order-selection"></td>
@@ -58,7 +59,7 @@
                         <td><?php echo $order->{'request-date'} ?></td>
                         <td><?php echo $order->organization ?></td>
                         <td><?php echo $order->{'pickup-date'} ?></td>
-                        <td><?php echo $order->{'request-time'} ?></td>
+                        <td><?php echo $request_time->time ?></td>
                         <td><?php echo $order->{'contact-person'} ?></td>
                         <td><?php echo $order->phone ?></td>
                         <td>
@@ -118,13 +119,14 @@
                 </thead>
                 <tbody>
                     <?php foreach ( $orders as $order ) {?>
+                    <?php $request_time = \pr\Hours::get_hour( $order->{'request-time'} )?>
                     <tr data-id="<?php echo $order->id ?>">
                         <td class="<?php echo $order->status ?>"><?php echo ucfirst( $order->status ) ?></td>
                         <td><?php echo $order->order_id ?></td>
                         <td><?php echo $order->{'request-date'} ?></td>
                         <td><?php echo $order->organization ?></td>
                         <td><?php echo $order->{'pickup-date'} ?></td>
-                        <td><?php echo $order->{'request-time'} ?></td>
+                        <td><?php echo $request_time->time ?></td>
                         <td><?php echo $order->{'contact-person'} ?></td>
                         <td><?php echo $order->phone ?></td>
                         <td>
@@ -203,12 +205,13 @@
             <form action="#" class="approval-form" id="approval-form">
                 <ul class="review-list">
                     <?php foreach ( $orders as $order ) {?>
+                    <?php $request_time = \pr\Hours::get_hour( $order->{'request-time'} )?>
                     <li data-id="<?php echo $order->id ?>">
-                        <h5><strong>Order: </strong>                                                     <?php echo $order->order_id ?></h5>
+                        <h5><strong>Order: </strong> <?php echo $order->order_id ?></h5>
                         <p><strong>Request date: </strong><?php echo $order->{'request-date'} ?></p>
                         <p><strong>Organization: </strong><?php echo $order->organization ?></p>
                         <p><strong>Pickup date: </strong><?php echo $order->{'pickup-date'} ?></p>
-                        <p><strong>Request time: </strong><?php echo $order->{'request-time'} ?></p>
+                        <p><strong>Request time: </strong><?php echo $request_time->time ?></p>
                         <p><strong>Contact: </strong><?php echo $order->{'contact-person'} ?></p>
                         <p><strong>Phone: </strong><?php echo $order->{'phone'} ?></p>
                         <p><strong>Sample info: </strong>
